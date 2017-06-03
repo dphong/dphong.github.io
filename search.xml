@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+    
+    <entry>
+      <title><![CDATA[配置Github Webhooks自动更新代码]]></title>
+      <url>http://blog.com/2017/06/02/set-github-webhook/</url>
+      <content type="html"><![CDATA[<h3 id="webhooks代码"><a href="#webhooks代码" class="headerlink" title="webhooks代码"></a>webhooks代码</h3><pre><code>&lt;?php
+    $git_dir = &apos;/var/www/.git&apos;;
+    $work_tree = &apos;/var/www&apos;;
+    $hook_log = file_get_contents(&apos;php://input&apos;);
+
+    // 判断是否为WebHook请求
+    if (!empty($hook_log)) {
+        $json = json_decode($hook_log, true);
+        if (array_key_exists(&apos;ref&apos;, $json)) {
+            // 检测到ref键, 执行pull
+            $cmd = &quot;/usr/bin/sudo git --git-dir=$git_dir --work-tree=$work_tree pull  2&gt;&amp;1&quot;;
+            $sh_log = shell_exec($cmd);
+        } else {
+            // 未检测到ref键, 为测试请求
+            $sh_log = &apos;testing&apos;;
+        }
+    } else {
+        // 正常访问
+        echo &apos;&lt;h1&gt;normal view~&lt;/h1&gt;&apos;;
+}
+</code></pre>]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> Github </tag>
+            
+            <tag> Webhooks </tag>
+            
+            <tag> 持续集成 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[为树莓派配置开机自动上传IP]]></title>
+      <url>http://blog.com/2017/06/01/how-to-know-respberry-ip/</url>
+      <content type="html"><![CDATA[<h3 id="查询IP并上传IP"><a href="#查询IP并上传IP" class="headerlink" title="查询IP并上传IP"></a>查询IP并上传IP</h3><h4 id="ip-sh"><a href="#ip-sh" class="headerlink" title="ip.sh"></a>ip.sh</h4><pre><code>#!/bin/bash
+
+#outside_ip
+ip1=`curl -s ipecho.net/plain`
+
+#inside_ip
+ip2=`LC_ALL=C ifconfig|grep &quot;inet addr:&quot;|grep -v &quot;127.0.0.1&quot;| cut -d: -f2|awk &apos;{print $1}&apos;`
+ip3=`LC_ALL=C ifconfig|grep &quot;[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}&quot;|grep -v &quot;127.0.0.1&quot;|cut -d: -f2|awk &apos;{print $2}&apos;|head -n 1`
+if [ ! -n &quot;$ip2&quot; ];
+then
+    ip2=$ip3
+fi
+
+url=&apos;ip.wlwshow.cn&apos;
+
+#change your name
+name=&apos;test_ubuntu&apos;
+
+while getopts :ha:o:i: OPTION
+do
+case $OPTION in
+a) name=$OPTARG ;;
+o) ip1=$OPTARG ;;
+i) ip2=$OPTARG ;;
+h)
+echo -e &quot;help:\n  -a \tname&quot;
+echo -e &quot;  -o \tthe outside ip&quot;
+echo -e &quot;  -i \tthe inside ip&quot;
+echo -e &quot;  -h \thelp document&quot;
+exit ;;
+\?) ;;
+esac
+done
+
+url2=&quot;$url?outside_ip=$ip1&amp;inside_ip=$ip2&amp;name=$name&quot;
+#echo $url2
+curl $url2
+
+echo -e &quot;Client : Successful!&quot;
+</code></pre><p>编辑<strong>ip.sh</strong>并保存</p>
+<pre><code>chmod +x ip.sh
+</code></pre><p>查询IP并上传</p>
+<pre><code>./ip.sh
+</code></pre><p>然后在 <a href="http://ip.wlwshow.cn" target="_blank" rel="external">ip.wlwshow.cn</a> 查看<br>也可以使用参数,”-h” 获取参数列表</p>
+<pre><code>./ip.sh --help
+# -a 指定本机的名称，如：
+./ip.sh -a test_ubuntu
+</code></pre><h3 id="配置开机自动执行"><a href="#配置开机自动执行" class="headerlink" title="配置开机自动执行"></a>配置开机自动执行</h3><h4 id="config-sh"><a href="#config-sh" class="headerlink" title="config.sh"></a>config.sh</h4><pre><code>#!/bin/bash
+path=`pwd`
+file_name=&quot;ip.sh&quot;
+file_path=&quot;$path/$file_name&quot;
+
+echo &quot;#auto upload local ip address&quot; &gt;&gt; /etc/rc.d/rc.local
+
+#change your name in here
+#echo &quot;$file_path -a your_name &gt; /dev/null&quot; &gt;&gt; /etc/rc.d/rc.local
+
+if [ ! -n &quot;$1&quot; ]
+then
+    echo &quot;$file_path &gt; /dev/null 2&gt;&amp;1&quot; &gt;&gt; /etc/rc.d/rc.local
+else
+    echo &quot;$file_path -a $1 &gt; /dev/null 2&gt;&amp;1&quot; &gt;&gt; /etc/rc.d/rc.local
+fi
+</code></pre><p>编辑<strong>config.sh</strong>并保存</p>
+<pre><code>chmod +x config.sh
+</code></pre><p>执行config.sh，添加到开机启动</p>
+<pre><code>./config.sh
+</code></pre><p>可直接添加参数name</p>
+<pre><code>./config.sh your_name
+</code></pre><p>第二次配置时，需要将 /etc/rc.d/rc.local 文件中，前一次添加的内容删除</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> 树莓派 </tag>
+            
+            <tag> IP </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Linux检测远程端口是否打开]]></title>
+      <url>http://blog.com/2017/05/30/scan-port/</url>
+      <content type="html"><![CDATA[<p>本文介绍3种检测远程端口方式，telnet、nmap和nc。如果Linux提示找不到命令，请用apt-get或者yum安装。</p>
+<h3 id="1-telnet方式"><a href="#1-telnet方式" class="headerlink" title="1 telnet方式"></a>1 telnet方式</h3><pre><code>telnet ip port
+</code></pre><p>如果提示Connected to ip，说明该端口可以访问。<br>如果超时，说明端口未开放。</p>
+<h3 id="2-nmap方式"><a href="#2-nmap方式" class="headerlink" title="2 nmap方式"></a>2 nmap方式</h3><pre><code>nmap ip -p port
+
+# 显示全部打开的端口
+nmap ip
+</code></pre><p>根据显示close/open确定端口是否打开。</p>
+<h3 id="3-nc方式"><a href="#3-nc方式" class="headerlink" title="3 nc方式"></a>3 nc方式</h3><pre><code>nc -v ip port
+</code></pre><p>端口未打开返回状态为非0。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> Linux </tag>
+            
+            <tag> 端口扫描 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Git的配置及使用]]></title>
+      <url>http://blog.com/2017/05/22/use-git/</url>
+      <content type="html"><![CDATA[<h3 id="下载Git"><a href="#下载Git" class="headerlink" title="下载Git"></a>下载Git</h3><h5 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h5><pre><code>sudo apt-get install git
+</code></pre><h5 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h5><p>Git<a href="https://git-for-windows.github.io/" target="_blank" rel="external">官网</a>下载安装</p>
+<h3 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h3><h4 id="设置git用户名-邮箱"><a href="#设置git用户名-邮箱" class="headerlink" title="设置git用户名/邮箱"></a>设置git用户名/邮箱</h4><pre><code>git config --global user.name [username]
+git config --global user.email [email]
+</code></pre><p>如果Git源每次操作需要你输入用户名/密码验证，就需要做如下设置：</p>
+<h5 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h5><pre><code>echo &quot;[credential]&quot; &gt;&gt; .git/config
+echo &quot;    helper = store&quot; &gt;&gt; .git/config
+</code></pre><h5 id="Windows-1"><a href="#Windows-1" class="headerlink" title="Windows"></a>Windows</h5><p>打开.git/config，在最后添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[credential]</div><div class="line">	helper = store</div></pre></td></tr></table></figure>
+<p>这样就可以保存用户名密码，不用每次都输入了！</p>
+<h3 id="使用Git"><a href="#使用Git" class="headerlink" title="使用Git"></a>使用Git</h3><h5 id="从远程库克隆"><a href="#从远程库克隆" class="headerlink" title="从远程库克隆"></a>从远程库克隆</h5><pre><code>git clone --depth=1 http://jdjks.hfnu.edu.cn/git/AnhuiIOT.git
+</code></pre><h5 id="暂存区、工作区管理"><a href="#暂存区、工作区管理" class="headerlink" title="暂存区、工作区管理"></a>暂存区、工作区管理</h5><p>提交本次修改至暂存区：<code>git add [file]</code></p>
+<p>提交暂存区文件至版本库: <code>git commit -m &quot;message&quot;</code></p>
+<blockquote>
+<p>PS: -m 指定本次提交的所做的修改，方便版本管理及回退</p>
+</blockquote>
+<p>查看git工作区的状态: <code>git status</code></p>
+<p>查看版本库提交记录: <code>git log</code></p>
+<p>查看工作区和版本库里面最新版本的区别: <code>git diff HEAD -- [file]</code></p>
+<p>丢弃对某个文件的修改: <code>git checkout -- [file]</code></p>
+<p>把暂存区的修改撤销掉（unstage），重新放回工作区: <code>git reset HEAD [file]</code></p>
+<p>放弃本地修改，强制pull： </p>
+<p><code>git fetch --all</code></p>
+<p><code>git reset --hard origin/master</code></p>
+<p>git fetch只是下载远程的库的内容，不做任何的合并。</p>
+<p>git reset把HEAD指向刚刚下载的最新的版本。</p>
+<h5 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h5><p>查看分支：<code>git branch</code></p>
+<p>创建分支：<code>git branch &lt;name&gt;</code></p>
+<p>切换分支：<code>git checkout &lt;name&gt;</code></p>
+<p>创建+切换分支：<code>git checkout -b &lt;name&gt;</code></p>
+<p>合并某分支到当前分支：<code>git merge &lt;name&gt;</code></p>
+<p>合并分支，禁用Fast forward：<code>git merge --no-ff -m &quot;merge with no-ff&quot; dev</code></p>
+<p>删除分支：<code>git branch -d &lt;name&gt;</code></p>
+<p>查看分支合并情况： <code>git log --graph --pretty=oneline --abbrev-commit</code></p>
+<h5 id="参考教程"><a href="#参考教程" class="headerlink" title="参考教程"></a>参考教程</h5><p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">git教程–廖雪峰</a></p>
+<p><a href="http://www.cnblogs.com/cspku/articles/Git_cmds.html" target="_blank" rel="external">Git常用命令</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> Git </tag>
+            
+            <tag> 版本控制 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[第一次牛客网模拟测验的一些问题]]></title>
+      <url>http://blog.com/2017/05/21/nowcoder-first-test/</url>
+      <content type="html"><![CDATA[<p>&emsp;&emsp;首先选择意向职位时，并没有<strong>PHP</strong>，所以报名时就选了<strong>运维</strong>，考试时间为5月19日 <strong>19:00-21:00</strong>，根本没有任何准备，19号上午收到官方的邮件才想起来这件事，邮件中给出了考试时间和考试的入口地址，然而我并没有好好看，匆忙的刷了一下午题，等到晚上的时候，官网上进入考试的入口一直不能进去，怎么刷新都不行，<strong>19:05</strong>才想起来再看一下邮件，开始进入考试，做选择题时，很多常用的知识都不知道，导致做选择题做了将近 <strong>40</strong>分钟，而且正确率还没保障。做编程题时，基础不够扎实，做其中一个题目就用了 <strong>45</strong>分钟，所以余下的两个题目就只剩了 <strong>20</strong>分钟的时间，这二十分钟肯定只够做其中一个题目，然而我读了下第三题的题目，还没思考，就觉得这是最后一个题目，肯定比较难，就放弃它，做另一个题目去了，然后又花了 <strong>10</strong>分钟做，才发现时间太短做不好，这时再绝望的转去做最后一题，时间已不足 <strong>10</strong>分钟，才发现这个有很快捷的解题思路，然而时间不够用了，只少了两分钟的时间，这两分钟不应该错过的，故留踩坑记录，警示自己。</p>
+<h4 id="踩坑记录"><a href="#踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h4><ol>
+<li>没有做好充分的准备，基础知识不扎实，导致做题速度慢，正确率低</li>
+</ol>
+<ul>
+<li>对信息的关注度不够，导致不能及时进入考试</li>
+<li>决策有问题，导致最后的时间没能好好利用，再次错过了答题</li>
+</ul>
+<h4 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h4><p>推荐大家使用<a href="https://www.nowcoder.com" target="_blank" rel="external">牛客网</a>，偶尔可以刷刷题，巩固一下基础知识，无聊时可以做一下智力题专项训练，预防青年痴呆。</p>
+<h4 id="补更结果"><a href="#补更结果" class="headerlink" title="补更结果"></a>补更结果</h4><p>今天结果出来了很意外，先看了下求职竞争力报告，分数挺低的，挺可惜的，后来和同学详聊的时候，他发现我进排行榜了，着实吓了一跳，这下觉得更可惜了。以下附上求职竞争力报告和排行榜。</p>
+<p><a href="http://ongjgltez.bkt.clouddn.com/pdf/%E6%B1%82%E8%81%8C%E7%AB%9E%E4%BA%89%E5%8A%9B%E6%8A%A5%E5%91%8A.pdf" target="_blank" rel="external">求职竞争力报告</a></p>
+<p><img src="http://ongjgltez.bkt.clouddn.com/image/%E6%8E%92%E8%A1%8C%E6%A6%9C.png" alt="Alt text"></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> life </tag>
+            
+            <tag> 牛客 </tag>
+            
+            <tag> 程序猿 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[我的站点]]></title>
+      <url>http://blog.com/2017/03/25/my-website/</url>
+      <content type="html"><![CDATA[<h3 id="个人博客"><a href="#个人博客" class="headerlink" title="个人博客"></a>个人博客</h3><ul>
+<li><a href="http://iotshow.top" target="_blank" rel="external">iotshow.top</a></li>
+<li><a href="http://dphong.top" target="_blank" rel="external">dphong.top</a></li>
+<li><a href="http://dphong.github.io" target="_blank" rel="external">dphong.github.io</a></li>
+<li><a href="http://wlwshow.cn" target="_blank" rel="external">wlwshow.cn</a></li>
+</ul>
+<h3 id="智能交通系统管理平台"><a href="#智能交通系统管理平台" class="headerlink" title="智能交通系统管理平台"></a>智能交通系统管理平台</h3><ul>
+<li><a href="http://iot.iotshow.top" target="_blank" rel="external">iot.iotshow.top</a></li>
+<li><a href="http://iot.wlwshow.cn" target="_blank" rel="external">iot.wlwshow.cn</a></li>
+</ul>
+<h3 id="物联网作品展示平台"><a href="#物联网作品展示平台" class="headerlink" title="物联网作品展示平台"></a>物联网作品展示平台</h3><ul>
+<li><a href="http://work.wlwshow.cn" target="_blank" rel="external">work.wlwshow.cn</a></li>
+</ul>
+<h3 id="Linux-IP上传地址"><a href="#Linux-IP上传地址" class="headerlink" title="Linux IP上传地址"></a>Linux IP上传地址</h3><ul>
+<li><a href="http://ip.wlwshow.cn" target="_blank" rel="external">ip.wlwshow.cn</a></li>
+</ul>
+<h3 id="百度地图API使用示例"><a href="#百度地图API使用示例" class="headerlink" title="百度地图API使用示例"></a>百度地图API使用示例</h3><ul>
+<li><a href="http://map.wlwshow.cn" target="_blank" rel="external">map.wlwshow.cn</a></li>
+</ul>
+<h3 id="生活随想"><a href="#生活随想" class="headerlink" title="生活随想"></a>生活随想</h3><ul>
+<li><a href="http://dirly.wlwshow.cn" target="_blank" rel="external">dirly.wlwshow.cn</a></li>
+</ul>
+<p>ps: wlwshow.cn 域名下的所有网站，暂时关闭</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> website </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[我的2016]]></title>
+      <url>http://blog.com/2016/12/31/my-2016/</url>
+      <content type="html"><![CDATA[<p>2016年的整体感觉就是学的东西很杂，什么都学了，什么都没深入，上半年还比较有斗志，下半年什么都没学到，就这样浑浑噩噩的过完了。</p>
+<h2 id="关于学习"><a href="#关于学习" class="headerlink" title="关于学习"></a>关于学习</h2><p>上半年虽然参加了很多的比赛，但哪个比赛都没做好。下半年则是什么都没学好，就只是弄了下云服务器，机器人小组培训、附中代课、帮老师帮忙，这一些琐碎的生活占据了我大部分的学习时间。回想这一年也就只有大二下学期期末之前做<a href="http://wlwshow.cn" target="_blank" rel="external">物联网作品展示平台</a>这个网站的时候，真正奋斗过一段时间，现在想起来，那段时间是那样的充实。</p>
+<h2 id="关于竞赛"><a href="#关于竞赛" class="headerlink" title="关于竞赛"></a>关于竞赛</h2><h3 id="robocup-2D"><a href="#robocup-2D" class="headerlink" title="robocup 2D"></a>robocup 2D</h3><p>这个曾经奋斗了一年的项目，因为它，我结识到一群挚友，和他们共同努力，我的人生开始因此而不同，梦想始于此。</p>
+<h3 id="ACM"><a href="#ACM" class="headerlink" title="ACM"></a>ACM</h3><p>4月份的时候参加了学校集体报名的CCF计算机资格认证，因为成绩还不错，就被朱强老师叫去参加安徽省的ACM程序设计竞赛，和实验室的战友一起去参加了这次比赛，因为那段时间比较忙，并没有怎么去准备，ACM的基本框架都不怎么会写，该特别注意的地方也不知道，因为不知道 “printf” 和 “cout” 在处理数据时的速度差别，导致一个已经做出来的题目因为 “timeout” 而无法通过测试，对此特别遗憾。</p>
+<h3 id="物联网创新创业大赛"><a href="#物联网创新创业大赛" class="headerlink" title="物联网创新创业大赛"></a>物联网创新创业大赛</h3><p>当时和两个室友一起加入了这个小组，感觉冯玉婷老师付出的比我们的都多，然而我们一学期都没能坚持下来，然后整个项目就荒废掉了，暑假的比赛也没报名参加，无果而终。</p>
+<h3 id="单片机与嵌入式系统应用技能竞赛"><a href="#单片机与嵌入式系统应用技能竞赛" class="headerlink" title="单片机与嵌入式系统应用技能竞赛"></a>单片机与嵌入式系统应用技能竞赛</h3><p>今年这个竞赛新增了一个ARM版，因为我以前学过STM32，所以就和学长一起报名参加了，但也没有好好准备，所以比赛的结果并不好。</p>
+<h2 id="关于读书"><a href="#关于读书" class="headerlink" title="关于读书"></a>关于读书</h2><p>这一年就只读了这几本书，还有些买来了就没看过的，没有完成当初定下的读书目标，今后一定要多读点书（人丑就要多读书）。</p>
+<blockquote>
+<p>《拆掉思维里的墙》<br>《从0到1》<br>《创新者的窘境》</p>
+</blockquote>
+<h2 id="关于生活"><a href="#关于生活" class="headerlink" title="关于生活"></a>关于生活</h2><p>有一群非常要好的朋友，一起奋斗，是件多么快乐的事啊。<br>还记得当时程慧生日的时候，叫了实验室的人一起吃饭，我跟强强坐在一起，当时他们是喝的那么尽兴，我还不理解的问了强强，怎么喝这么猛，强强回了一句，下次再一起聚就不知道是什么时候的事了，这一次自然要喝到尽兴为止。他们都去工作之后，我体会到了那种感情，却不能退到那一天，陪他们酩酊大醉，下次再聚，我不会再错过了。<br>陈兴，最要好的朋友之一，非常敬佩他的学习精神与生活态度，能够勇敢的去做自己想做的事情，并且能坚定自己的想法。<br>当然还有强强、赵坤鹏、程慧，你们这群学长对我的鼓励与帮助，永远铭记于心。<br>送给自己的一段话：</p>
+<blockquote>
+<p>高潮时享受成就，低潮时享受人生，有心思时干有意义的活，没心情时做有意思的事。</p>
+</blockquote>
+<h2 id="关于理想"><a href="#关于理想" class="headerlink" title="关于理想"></a>关于理想</h2><p>大一时候的理想是要创业，结果一两年下来，离这个理想越来越远，已经变成梦想飞走了，对人生思考的还远远不够，反思太少了，现在的理想就是好好学习，多读书，多反思。</p>
+<blockquote>
+<p>平庸，就是失去追求卓越信念的那个瞬间。</p>
+</blockquote>
+<h2 id="关于爱情"><a href="#关于爱情" class="headerlink" title="关于爱情"></a>关于爱情</h2><p>我们之间，没有开始，就也不会有结束，送你这段话。</p>
+<blockquote>
+<p>愿你，此后做的每一个选择都是为了自己；<br>愿你，每天那么忙，做的都是自己喜欢的；<br>愿你，将来的婚姻，真的是因为爱情；<br>愿你，少一些何必当初，多一些暗自庆幸；<br>愿你，以后的所有泪水都是喜极而泣。</p>
+</blockquote>
+<p align="right">落笔于2016.12.31 21:30。</p>]]></content>
+      
+        
+        <tags>
+            
+            <tag> life </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[运用 批处理文件+Excel 实现批量改名]]></title>
+      <url>http://blog.com/2016/09/10/First-blog/</url>
+      <content type="html"><![CDATA[<h2 id="1-进入CMD命令行模式"><a href="#1-进入CMD命令行模式" class="headerlink" title="1.进入CMD命令行模式"></a>1.进入CMD命令行模式</h2><p>按 win+r ，在弹出的运行框中输入cmd，回车。</p>
+<p><img src="http://odar1igu6.bkt.clouddn.com/1.png" alt="Alt text"></p>
+<h2 id="2-将现在的文件名导入Excel"><a href="#2-将现在的文件名导入Excel" class="headerlink" title="2.将现在的文件名导入Excel"></a>2.将现在的文件名导入Excel</h2><p>在命令行中使用cd命令进入相应的文件夹，再在命令行中输入 dir /w &gt; rename.xls </p>
+<p><img src="http://odar1igu6.bkt.clouddn.com/2.png" alt="Alt text"><br>文件夹中就会生成一个 rename.xls 的Excel文件。</p>
+<h2 id="3-生成重命名命令"><a href="#3-生成重命名命令" class="headerlink" title="3.生成重命名命令"></a>3.生成重命名命令</h2><p>使用公式 =SUBSTITUTE(A1,”old_string”,”new_string”),回车<br><img src="http://odar1igu6.bkt.clouddn.com/3.png" alt="Alt text"></p>
+<p>再输入 =CONCATENATE(“ren “,A1,” “,B1)</p>
+<p><img src="http://odar1igu6.bkt.clouddn.com/4.png" alt="Alt text"></p>
+<h2 id="4-执行批处理命令"><a href="#4-执行批处理命令" class="headerlink" title="4.执行批处理命令"></a>4.执行批处理命令</h2><p>将上面批量生成的命令复制下来，在之前的cmd命令行中粘贴，或者在目标文件夹下新建 rename.bat ,右键 编辑，粘贴保存，双击即可运行。<br><img src="http://odar1igu6.bkt.clouddn.com/5.png" alt="Alt text"></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 批处理 </tag>
+            
+            <tag> Excel </tag>
+            
+            <tag> skill </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
+</search>
