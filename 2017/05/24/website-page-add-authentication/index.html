@@ -488,15 +488,15 @@ $html = &lt;&lt;&lt;html
     &lt;meta charset=&quot;utf-8&quot;&gt;
     &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
     &lt;style&gt;
-        #input-text &#123;
+        #input-text &amp;#123;
             width: auto;
             padding: 0.5em 1em;
             border: 1px solid #ccc;
             border-radius: 0.2em;
             height: auto;
             font-size: 2em;
-        &#125;
-        #input-submit &#123;
+        &amp;#125;
+        #input-submit &amp;#123;
             color: #fff;
             background-color: #337ab7;
             border-color: #2e6da4;
@@ -505,7 +505,7 @@ $html = &lt;&lt;&lt;html
             border: 1px solid transparent;
             border-radius: 0.2em;
             font-size: 2em;
-        &#125;
+        &amp;#125;
     &lt;/style&gt;
 &lt;/head&gt;
 &lt;div class=&quot;text-center&quot; style=&quot;padding-top: 20%;text-align: center&quot;&gt;
@@ -534,27 +534,27 @@ $auth_passwd = [
 ];
 
 $key = &#39;&#39;;
-if (!empty($_POST)) &#123;
+if (!empty($_POST)) &amp;#123;
     // POST字段匹配
     $postDataKey = array_keys($_POST)[0];
     $key = array_search($postDataKey, $auth_name, true);
-&#125;
+&amp;#125;
 
 $path = parse_url( $_SERVER[&#39;REQUEST_URI&#39;] )[&#39;path&#39;];
 $key = $key ?: array_search( $path, $url, true);
 
-if ($key !== &#39;&#39; &amp;&amp; $key !== FALSE) &#123;
-    if (isset($_POST[$auth_name[$key]]) &amp;&amp; $_POST[$auth_name[$key]] === $auth_passwd[$key]) &#123;
+if ($key !== &#39;&#39; &amp;&amp; $key !== FALSE) &amp;#123;
+    if (isset($_POST[$auth_name[$key]]) &amp;&amp; $_POST[$auth_name[$key]] === $auth_passwd[$key]) &amp;#123;
         $_SESSION[$auth_name[$key]] = &#39;1&#39;;
-    &#125;
-    if ($path === $url[$key]) &#123;
-        if (!isset($_SESSION[$auth_name[$key]]) || $_SESSION[$auth_name[$key]] !== &#39;1&#39;) &#123;
+    &amp;#125;
+    if ($path === $url[$key]) &amp;#123;
+        if (!isset($_SESSION[$auth_name[$key]]) || $_SESSION[$auth_name[$key]] !== &#39;1&#39;) &amp;#123;
             $html = str_replace(&#39;live_auth&#39;, $auth_name[$key], $html);
             $html = str_replace(&#39;live_url&#39;, $url[$key], $html);
             echo $html;die;
-        &#125;
-    &#125;
-&#125;
+        &amp;#125;
+    &amp;#125;
+&amp;#125;
 
 /*********** Solution Two *********/
 /*
@@ -562,31 +562,31 @@ if ($key !== &#39;&#39; &amp;&amp; $key !== FALSE) &#123;
 $url = &#39;/20180328&#39;;
 $auth_name = &#39;live_auth0328&#39;;
 $auth_passwd = &#39;12345678&#39;;
-if (isset($_POST[$auth_name]) &amp;&amp; $_POST[$auth_name] === $auth_passwd) &#123;
+if (isset($_POST[$auth_name]) &amp;&amp; $_POST[$auth_name] === $auth_passwd) &amp;#123;
     $_SESSION[$auth_name] = &#39;1&#39;;
-&#125;
-if (parse_url( $_SERVER[&#39;REQUEST_URI&#39;] )[&#39;path&#39;] === $url) &#123;
-    if (!isset($_SESSION[$auth_name]) || $_SESSION[$auth_name] !== &#39;1&#39;) &#123;
+&amp;#125;
+if (parse_url( $_SERVER[&#39;REQUEST_URI&#39;] )[&#39;path&#39;] === $url) &amp;#123;
+    if (!isset($_SESSION[$auth_name]) || $_SESSION[$auth_name] !== &#39;1&#39;) &amp;#123;
         $html = str_replace(&#39;live_auth&#39;, $auth_name, $html);
         $html = str_replace(&#39;live_url&#39;, $url, $html);
         echo $html;die;
-    &#125;
-&#125;
+    &amp;#125;
+&amp;#125;
 
 //20180329
 $url = &#39;/20180329&#39;;
 $auth_name = &#39;live_auth0329&#39;;
 $auth_passwd = &#39;123456&#39;;
-if (isset($_POST[$auth_name]) &amp;&amp; $_POST[$auth_name] === $auth_passwd) &#123;
+if (isset($_POST[$auth_name]) &amp;&amp; $_POST[$auth_name] === $auth_passwd) &amp;#123;
     $_SESSION[$auth_name] = &#39;1&#39;;
-&#125;
-if (parse_url( $_SERVER[&#39;REQUEST_URI&#39;] )[&#39;path&#39;] === $url) &#123;
-    if (!isset($_SESSION[$auth_name]) || $_SESSION[$auth_name] !== &#39;1&#39;) &#123;
+&amp;#125;
+if (parse_url( $_SERVER[&#39;REQUEST_URI&#39;] )[&#39;path&#39;] === $url) &amp;#123;
+    if (!isset($_SESSION[$auth_name]) || $_SESSION[$auth_name] !== &#39;1&#39;) &amp;#123;
         $html = str_replace(&#39;live_auth&#39;, $auth_name, $html);
         $html = str_replace(&#39;live_url&#39;, $url, $html);
         echo $html;die;
-    &#125;
-&#125;
+    &amp;#125;
+&amp;#125;
 */
 </code></pre>
 

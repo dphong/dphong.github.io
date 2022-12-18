@@ -510,14 +510,14 @@ print(result.text)
 <pre><code class="python">import requests
 
 s = requests.Session()
-headers = &#123;&#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;&#125;
+headers = &amp;#123;&#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;&amp;#125;
 s.headers.update(headers)
 
 result = s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=2&amp;_=1522140226962&#39;)
 print(result.text)
 </code></pre>
 <p>加了一个Accept的Header就好了，返回结果如下：</p>
-<pre><code class="json">&#123;
+<pre><code class="json">&amp;#123;
     &quot;pageSize&quot;: 2,
     &quot;size&quot;: 2,
     &quot;orderBy&quot;: null,
@@ -526,7 +526,7 @@ print(result.text)
     &quot;total&quot;: 39078,
     &quot;pages&quot;: 19539,
     &quot;rows&quot;: [
-        &#123;
+        &amp;#123;
             &quot;QUALIFICATIONDATE&quot;: &quot;1991-07-01&quot;,
             &quot;SXXX&quot;: 0,
             &quot;ISLEADER&quot;: &quot;1&quot;,
@@ -552,8 +552,8 @@ print(result.text)
             &quot;ROW_ID&quot;: 1,
             &quot;RESULT&quot;: &quot;10&quot;,
             &quot;QUALIFICATION_NUM&quot;: &quot;赣0187&quot;
-        &#125;,
-        &#123;
+        &amp;#125;,
+        &amp;#123;
             &quot;QUALIFICATIONDATE&quot;: &quot;2011-03-14&quot;,
             &quot;SXXX&quot;: 0,
             &quot;ISLEADER&quot;: &quot;1&quot;,
@@ -578,7 +578,7 @@ print(result.text)
             &quot;QUALIFICATION_NUM&quot;: &quot;A20104301040236&quot;,
             &quot;AGE&quot;: 38,
             &quot;OFFICEID&quot;: &quot;102020&quot;
-        &#125;
+        &amp;#125;
     ],
     &quot;firstPage&quot;: 1,
     &quot;prePage&quot;: 0,
@@ -600,7 +600,7 @@ print(result.text)
         8
     ],
     &quot;pageNum&quot;: 1
-&#125;
+&amp;#125;
 </code></pre>
 <h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><p>至此，就能想想数据怎么存储了，返回的数据中 <strong>“total”: 39078</strong> ，说明总共有39079条数据，可以设置分页大小，可以按照100条一次进行处理，先抓取第一页，看看数据总量是多少，然后再确认分页数，正式进行爬取，输出每一行数据中的律师的姓名，代码如下：</p>
 <pre><code>import requests
@@ -609,7 +609,7 @@ import time, math
 import random
 
 s = requests.Session()
-headers = &#123;&#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;&#125;
+headers = &amp;#123;&#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;&amp;#125;
 s.headers.update(headers)
 
 resu =  s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=1&amp;_=&#39; + str(round(time.time() * 1000)))
@@ -679,9 +679,9 @@ db = pymysql.connect(&quot;127.0.0.1&quot;,&quot;root&quot;,&quot;xxxxxx&quot;,&
 cursor = db.cursor()
 
 s = requests.Session()
-headers = &#123;
+headers = &amp;#123;
     &#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;
-&#125;
+&amp;#125;
 s.headers.update(headers)
 
 resu =  s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=1&amp;_=&#39; + str(round(time.time() * 1000)))

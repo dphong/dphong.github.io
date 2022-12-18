@@ -496,10 +496,10 @@ deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ jessie main ui
 <pre><code class="shell">sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 </code></pre>
 <p>在该文件最后添加：</p>
-<pre><code class="conf">network=&#123;
+<pre><code class="conf">network=&amp;#123;
   ssid=&quot;wifiname&quot;
   psk=&quot;password&quot;
-&#125;
+&amp;#125;
 </code></pre>
 <p><code>引号部分分别为 WiFi 的名字和密码</code></p>
 <p>保存文件后几秒钟应该就会自动连接到该 WiFi<br>或者执行</p>

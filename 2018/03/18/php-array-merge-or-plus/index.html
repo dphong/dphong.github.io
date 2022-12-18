@@ -477,22 +477,22 @@ function IsPC() {
         <h4 id="小事记-Github上提交的PR被官方合并，我成了ThinkPHP5-1，80个贡献者之一"><a href="#小事记-Github上提交的PR被官方合并，我成了ThinkPHP5-1，80个贡献者之一" class="headerlink" title="小事记-Github上提交的PR被官方合并，我成了ThinkPHP5.1，80个贡献者之一"></a>小事记-Github上提交的PR被官方合并，我成了ThinkPHP5.1，80个贡献者之一</h4><p>使用ThinkPHP的数据验证类时，遇到了一个小bug，数字索引在数组合并时，有部分数据丢失，经过调试发现，是由于使用array_merge函数导致的，相关代码如下：</p>
 <pre><code class="php">//@@ -187,7 +187,7 @@ class Validate
 public function __construct(array $rules = [], array $message = [], array $field = [])
-&#123;
+&amp;#123;
     $this-&gt;rule    = array_merge($this-&gt;rule, $rules);  /* 修改前 */
     $this-&gt;rule    = $rules + $this-&gt;rule;                /* 修改后 */
     $this-&gt;message = array_merge($this-&gt;message, $message);
     $this-&gt;field   = array_merge($this-&gt;field, $field);
-&#125;
+&amp;#125;
 //@@ -214,7 +214,7 @@ public static function make(array $rules = [], array $message = [], array $field
 public function rule($name, $rule = &#39;&#39;)
-&#123;
-    if (is_array($name)) &#123;
+&amp;#123;
+    if (is_array($name)) &amp;#123;
         $this-&gt;rule = array_merge($this-&gt;rule, $name);    /* 修改前 */
         $this-&gt;rule = $name + $this-&gt;rule;                /* 修改后 */
-        if (is_array($rule)) &#123;
+        if (is_array($rule)) &amp;#123;
             $this-&gt;field = array_merge($this-&gt;field, $rule);
-        &#125;
-&#125;
+        &amp;#125;
+&amp;#125;
 </code></pre>
 <p>Google搜索了一番，其主要区别如下（引用自 <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000009114383">PHP中array_merge函数与array+array的区别</a>）：</p>
 <ol>
