@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    
+    <title>使用Python抓取数据 | Whark&#39;s Blog - 遥不可及</title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/favicon.png-img">
+    <link rel="icon" sizes="192x192" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/favicon.png-img">
+    <link rel="apple-touch-icon" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/favicon.png-img">
+    <link rel="stylesheet" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/css/animate.min.css">
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Whark">
+    <meta name="description" content="Creating and enjoy my life.">
+    <meta name="keywords" content="Whark dphong whark.cn,skill,Python,爬虫">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Whark&#39;s Blog - 遥不可及">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://whark.cn">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="使用Python抓取数据 | Whark&#39;s Blog - 遥不可及">
+    <meta property="og:description" content="Creating and enjoy my life.">
+    <meta property="og:article:tag" content="skill"> <meta property="og:article:tag" content="Python"> <meta property="og:article:tag" content="爬虫"> 
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/css/ie-blocker.css">
+
+        
+            <script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+<link rel="stylesheet" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/css/material.min.css">
+
+    
+<link rel="stylesheet" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/css/style.css">
+
+    
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/darcula.min.css">
+
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #EEEEEE !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #EEEEEE;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #EEEEEE;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #EEEEEE;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body.random{
+        background-image: url(https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/background/1.jpg);
+      }
+      body.aaa {
+        background-image: url(https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/bg.png-img);
+      }
+    </style>
+
+
+<!-- body bg-image -->
+<style>
+.bg-fixed {
+    background-attachment: fixed;
+}
+
+amiao.min.css?v=161022:9
+.with-bg-image {
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    -webkit-transition: background 1s ease-in-out;
+    transition: background 1s ease-in-out;
+}
+</style>
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/jquery.min.js"></script>
+
+
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/queue.js"></script>
+
+
+
+
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("
+<link rel=\"stylesheet\" href=\"/css/uc.css\">
+");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+    <!-- Baidu Analytics -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {var hm = document.createElement('script');
+        hm.src = 'https://hm.baidu.com/hm.js?d3c6dab5868b247156623eb640eb3fb9';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+
+    
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-130448312-1', 'auto');ga('send', 'pageview');
+    </script>
+    
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy with-bg-image bg-fixed">
+        <!-- randomNum -->
+        <script>
+//定时执行
+if(IsPC())
+{
+    bgrandom();
+    window.setInterval(bgrandom, 200000); 
+}
+
+function bgrandom() 
+{ 
+    var randomNum = Math.floor(Math.random() * 40 + 1);
+    $("body").css("background-image", "url(" + "https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/background/" + randomNum + ".jpg-bg" + ")");
+    //document.body.style.backgroundImage="url(" + "https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/background/" + randomNum +".jpg-bg" + ")";
+}
+
+function IsPC() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+                "SymbianOS", "Windows Phone",
+                "iPad", "iPod"];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+}
+
+</script>
+        <div id="bg-images"></div>
+
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%BC%80%E5%A7%8B%EF%BC%9A%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="post-toc-number">1.</span> <span class="post-toc-text">开始：页面数据分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%B0%9D%E8%AF%95%EF%BC%9AAPI%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8"><span class="post-toc-number">2.</span> <span class="post-toc-text">尝试：API接口调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="post-toc-number">3.</span> <span class="post-toc-text">数据处理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%80%BB%E7%BB%93"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#%E6%9C%AC%E6%96%87%E4%B8%BA%E5%8E%9F%E5%88%9B%E6%96%87%E7%AB%A0%EF%BC%8C%E8%BD%AC%E8%BD%BD%E8%AF%B7%E6%B3%A8%E6%98%8E%E5%87%BA%E5%A4%84%EF%BC%88https-whark-cn%EF%BC%89%E3%80%82"><span class="post-toc-number">4.0.1.</span> <span class="post-toc-text">本文为原创文章，转载请注明出处（https:&#x2F;&#x2F;whark.cn）。</span></a></li></ol></li></ol></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 35 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + 'https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/random/' + randomNum + '.jpg-blog' + ')');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                使用Python抓取数据
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-900 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Whark</strong>
+        <span>3月 27, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-none-link" href="/tags/Python/" rel="tag">Python</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/skill/" rel="tag">skill</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+        
+            <!-- Busuanzi Views -->
+            <a class="post_share-link" href="#">
+                <li class="mdl-menu__item">
+                    <span id="busuanzi_container_page_pv">
+                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
+                    </span>
+                </li>
+            </a>
+        
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=使用Python抓取数据&url=https://whark.cn//2018/03/27/use-python-crawl-lawyer-data/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=使用Python抓取数据&url=https://whark.cn//2018/03/27/use-python-crawl-lawyer-data/index.html&via=Whark" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://whark.cn//2018/03/27/use-python-crawl-lawyer-data/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://whark.cn//2018/03/27/use-python-crawl-lawyer-data/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=Whark&#39;s Blog - 遥不可及&title=使用Python抓取数据&summary=Creating and enjoy my life.&pics=https://whark.cnhttps://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/favicon.png-img&url=https://whark.cn/2018/03/27/use-python-crawl-lawyer-data/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+        <a class="post_share-link" href="https://telegram.me/share/url?url=https://whark.cn//2018/03/27/use-python-crawl-lawyer-data/index.html&text=使用Python抓取数据" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Telegram
+            </li>
+        </a>
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-900 mdl-card__supporting-text fade out">
+    
+        <p>本文以律师行业信用服务平台为例，介绍如何对页面数据进行提取，保存。</p>
+<h3 id="开始：页面数据分析"><a href="#开始：页面数据分析" class="headerlink" title="开始：页面数据分析"></a>开始：页面数据分析</h3><p>打开 <a target="_blank" rel="noopener" href="http://credit.gdlawyer.org.cn/front/indexFront/listDetail?type=1">广东省律师行业信用信息服务平台</a> ，F12打开控制台，点击Network，刷新界面，发现了向API请求的接口，返回的资源是 <strong>Json</strong> 格式的，而且资源中的数据就是页面上的，就能确认页面中的律师信息就是通过这个接口读取的，本站点是采用前后端分离写的，如果没有类似的请求，数据是直接渲染在HTML中，说明HTML在后端已经处理好了，只能按标签，分离数据了。</p>
+<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/lawyer_find_api_address.jpg" alt="lawyer_find_api_address"></p>
+<h3 id="尝试：API接口调用"><a href="#尝试：API接口调用" class="headerlink" title="尝试：API接口调用"></a>尝试：API接口调用</h3><p>看看API能不能正常访问，如下图：</p>
+<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/lawyer_api_address_try.jpg" alt="lawyer_api_address_try"></p>
+<p>观察参数，发现参数就是筛选项、分页大小、偏移量、和13位的时间戳。</p>
+<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/lawyer_api_address_analysis.png" alt="lawyer_api_address_analysis"></p>
+<p>把参数含义弄明白后，使用Python来请求API数据</p>
+<pre><code class="python">import requests
+
+result = requests.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=2&amp;_=1522140226962&#39;)
+
+print(result.text)
+</code></pre>
+<p>运行的结果如下：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;page-info start-row=&quot;1&quot; is-last-page=&quot;false&quot; has-next-page=&quot;true&quot; first-page=&quot;1&quot; pages=&quot;7816&quot; has-previous-page=&quot;false&quot; size=&quot;5&quot; pre-page=&quot;0&quot; is-first-page=&quot;true&quot; end-row=&quot;5&quot; next-page=&quot;2&quot; navigate-pages=&quot;8&quot; last-page=&quot;8&quot; page-num=&quot;1&quot; page-size=&quot;5&quot; total=&quot;39078&quot;&gt;
+    &lt;rows xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:java=&quot;http://java.sun.com&quot; empty=&quot;false&quot; xsi:type=&quot;java:java.util.HashMap&quot; /&gt;
+    &lt;rowsxmlns:xsi xmlns:java=&quot;http://java.sun.com&quot; empty=&quot;false&quot; xsi:type=&quot;java:java.util.HashMap&quot; /&gt;
+    &lt;rows xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:java=&quot;http://java.sun.com&quot; empty=&quot;false&quot; xsi:type=&quot;java:java.util.HashMap&quot; /&gt;
+    &lt;rows xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:java=&quot;http://java.sun.com&quot; empty=&quot;false&quot; xsi:type=&quot;java:java.util.HashMap&quot; /&gt;
+    &lt;rows xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:java=&quot;http://java.sun.com&quot; empty=&quot;false&quot; xsi:type=&quot;java:java.util.HashMap&quot; /&gt;
+    &lt;navigatepage-nums&gt;1&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;2&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;3&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;4&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;5&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;6&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;7&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;8&lt;/navigatepage-nums&gt;
+&lt;/page-info&gt;
+</code></pre>
+<p>发现并不是之前在浏览器中看到的JSON格式，而是xml格式的，所以可能是Header中没有指定接受json格式，所以添加一下Header：</p>
+<pre><code class="python">import requests
+
+s = requests.Session()
+headers = &#123;&#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;&#125;
+s.headers.update(headers)
+
+result = s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=2&amp;_=1522140226962&#39;)
+print(result.text)
+</code></pre>
+<p>加了一个Accept的Header就好了，返回结果如下：</p>
+<pre><code class="json">&#123;
+    &quot;pageSize&quot;: 2,
+    &quot;size&quot;: 2,
+    &quot;orderBy&quot;: null,
+    &quot;startRow&quot;: 1,
+    &quot;endRow&quot;: 2,
+    &quot;total&quot;: 39078,
+    &quot;pages&quot;: 19539,
+    &quot;rows&quot;: [
+        &#123;
+            &quot;QUALIFICATIONDATE&quot;: &quot;1991-07-01&quot;,
+            &quot;SXXX&quot;: 0,
+            &quot;ISLEADER&quot;: &quot;1&quot;,
+            &quot;SEX&quot;: &quot;1&quot;,
+            &quot;LAWYER_NAME&quot;: &quot;丁一元&quot;,
+            &quot;FIRSTTIME&quot;: &quot;1997-11-02&quot;,
+            &quot;EDUCATION&quot;: &quot;31&quot;,
+            &quot;CHECKYEAR&quot;: &quot;2016&quot;,
+            &quot;NATION&quot;: &quot;1&quot;,
+            &quot;POLITICALSTATUS&quot;: &quot;12&quot;,
+            &quot;LAWYERID&quot;: &quot;4513&quot;,
+            &quot;PHOTOTYPE&quot;: &quot;2&quot;,
+            &quot;OFFICENAME&quot;: &quot;北京市盈科(广州)律师事务所&quot;,
+            &quot;PARTNERTYPE&quot;: &quot;30&quot;,
+            &quot;ID&quot;: &quot;4513&quot;,
+            &quot;CERSTATUS&quot;: &quot;10&quot;,
+            &quot;AGE&quot;: 52,
+            &quot;OFFICEID&quot;: &quot;106280&quot;,
+            &quot;LAWYER_TYPE&quot;: &quot;10&quot;,
+            &quot;CERTIFICATE_TIME&quot;: &quot;1997-11-02&quot;,
+            &quot;SKILLALL&quot;: &quot;117,&quot;,
+            &quot;CERTIFICATENO&quot;: &quot;14401199710164293&quot;,
+            &quot;ROW_ID&quot;: 1,
+            &quot;RESULT&quot;: &quot;10&quot;,
+            &quot;QUALIFICATION_NUM&quot;: &quot;赣0187&quot;
+        &#125;,
+        &#123;
+            &quot;QUALIFICATIONDATE&quot;: &quot;2011-03-14&quot;,
+            &quot;SXXX&quot;: 0,
+            &quot;ISLEADER&quot;: &quot;1&quot;,
+            &quot;SEX&quot;: &quot;2&quot;,
+            &quot;LAWYER_TYPE&quot;: &quot;10&quot;,
+            &quot;CERTIFICATE_TIME&quot;: &quot;2015-11-20&quot;,
+            &quot;LAWYER_NAME&quot;: &quot;丁一粟&quot;,
+            &quot;FIRSTTIME&quot;: &quot;2015-11-20&quot;,
+            &quot;CERTIFICATENO&quot;: &quot;14403201511624464&quot;,
+            &quot;EDUCATION&quot;: &quot;14&quot;,
+            &quot;CHECKYEAR&quot;: &quot;2016&quot;,
+            &quot;ROW_ID&quot;: 2,
+            &quot;NATION&quot;: &quot;3&quot;,
+            &quot;POLITICALSTATUS&quot;: &quot;12&quot;,
+            &quot;LAWYERID&quot;: &quot;219833&quot;,
+            &quot;PHOTOTYPE&quot;: &quot;2&quot;,
+            &quot;OFFICENAME&quot;: &quot;北京大成(深圳)律师事务所&quot;,
+            &quot;PARTNERTYPE&quot;: &quot;30&quot;,
+            &quot;ID&quot;: &quot;219833&quot;,
+            &quot;CERSTATUS&quot;: &quot;10&quot;,
+            &quot;RESULT&quot;: &quot;10&quot;,
+            &quot;QUALIFICATION_NUM&quot;: &quot;A20104301040236&quot;,
+            &quot;AGE&quot;: 38,
+            &quot;OFFICEID&quot;: &quot;102020&quot;
+        &#125;
+    ],
+    &quot;firstPage&quot;: 1,
+    &quot;prePage&quot;: 0,
+    &quot;nextPage&quot;: 2,
+    &quot;lastPage&quot;: 8,
+    &quot;isFirstPage&quot;: true,
+    &quot;isLastPage&quot;: false,
+    &quot;hasPreviousPage&quot;: false,
+    &quot;hasNextPage&quot;: true,
+    &quot;navigatePages&quot;: 8,
+    &quot;navigatepageNums&quot;: [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+    ],
+    &quot;pageNum&quot;: 1
+&#125;
+</code></pre>
+<h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><p>至此，就能想想数据怎么存储了，返回的数据中 <strong>“total”: 39078</strong> ，说明总共有39079条数据，可以设置分页大小，可以按照100条一次进行处理，先抓取第一页，看看数据总量是多少，然后再确认分页数，正式进行爬取，输出每一行数据中的律师的姓名，代码如下：</p>
+<pre><code>import requests
+import xmltodict, json
+import time, math
+import random
+
+s = requests.Session()
+headers = &#123;&#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;&#125;
+s.headers.update(headers)
+
+resu =  s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=1&amp;_=&#39; + str(round(time.time() * 1000)))
+data = json.loads(resu.text)
+
+total = data[&#39;total&#39;]
+limit = 100
+page = math.ceil(total / limit)
+
+print(limit)
+print(page)
+
+for curPage in range(page):
+    resu =  s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=&#39; + str(curPage) + &#39;&amp;limit=&#39; + str(limit) + &#39;&amp;_=&#39; + str(round(time.time() * 1000)))
+
+    # Json to dist
+    data = json.loads(resu.text)
+
+    # 律师数据
+    rows = data[&#39;rows&#39;]
+    # 遍历数据
+
+    for value in rows:
+        print(value[&#39;LAWYER_NAME&#39;])
+
+    # 每抓取1页，随机等待几秒
+    wait_time = random.choice(range(1,10))
+    time.sleep(wait_time)
+</code></pre><p>结果如下：</p>
+<pre><code>100
+391
+丁一元
+丁一粟
+丁上第
+丁义平
+丁子塔
+丁小栩
+丁小媚
+...
+</code></pre><p>这些数据访问都正常了之后，就可以用使用数据库存储下来了，首先建库建表，挑了一些关键信息进行存储</p>
+<p>数据表结构如下：</p>
+<pre><code class="mysql">CREATE TABLE `lawyer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `sex` tinyint(2) DEFAULT NULL,
+  `qualification_date` varchar(10) DEFAULT NULL,
+  `first_time` varchar(10) DEFAULT NULL,
+  `checkyear` int(11) DEFAULT NULL,
+  `education` varchar(10) DEFAULT NULL,
+  `office_name` varchar(255) DEFAULT NULL,
+  `certificate_no` bigint(20) DEFAULT NULL,
+  `qualification_num` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1152 DEFAULT CHARSET=utf8mb4;
+</code></pre>
+<p>完整代码如下，添加了部分统计代码：</p>
+<pre><code class="python">import requests
+import xmltodict, json
+import pymysql
+import time, math, datetime
+import random
+
+# Mysql数据库连接
+db = pymysql.connect(&quot;127.0.0.1&quot;,&quot;root&quot;,&quot;xxxxxx&quot;,&quot;lawyar&quot;,use_unicode=True,charset=&quot;utf8&quot;)
+
+# 使用 cursor() 方法创建一个游标对象 cursor
+cursor = db.cursor()
+
+s = requests.Session()
+headers = &#123;
+    &#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;
+&#125;
+s.headers.update(headers)
+
+resu =  s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=1&amp;_=&#39; + str(round(time.time() * 1000)))
+
+# Json to dist
+data = json.loads(resu.text)
+total = data[&#39;total&#39;]
+limit = 100
+page = math.ceil(total / limit)
+print(&quot;数据总量：&quot; + str(total))
+print(&quot;总页数：&quot; + str(page))
+print(&quot;预计总执行时间：%ss&quot; % (str(total/9)))
+# 总时间
+start = datetime.datetime.now()
+count_wait_time = 0
+
+for curPage in range(page):
+    resu =  s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=&#39; + str(curPage) + &#39;&amp;limit=&#39; + str(limit) + &#39;&amp;_=&#39; + str(round(time.time() * 1000)))
+
+    # Json to dist
+    data = json.loads(resu.text)
+
+    # 律师数据
+    rows = data[&#39;rows&#39;]
+
+    # 遍历数据
+    for value in rows:
+        sql = &quot;INSERT INTO `lawyer`(`name`, `sex`, `qualification_date`, \
+        `first_time`, `checkyear`, `education`, `office_name`, `certificate_no`, `qualification_num`) \
+        VALUES (&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;)&quot; % \
+        (value.get(&#39;LAWYER_NAME&#39;), value.get(&#39;SEX&#39;), value.get(&#39;QUALIFICATIONDATE&#39;), value.get(&#39;FIRSTTIME&#39;), \
+        value.get(&#39;CHECKYEAR&#39;), value.get(&#39;EDUCATION&#39;), value.get(&#39;OFFICENAME&#39;), value.get(&#39;CERTIFICATENO&#39;), value.get(&#39;QUALIFICATION_NUM&#39;))
+
+        sql = sql.replace(&#39;\&#39;None\&#39;&#39;, &#39;0&#39;)
+        sql.encode(&#39;utf-8&#39;)
+        # print(sql)
+        cursor.execute(sql)
+
+    # 提交数据到数据库
+    db.commit()
+    wait_time = random.choice(range(1,10))
+    count_wait_time += wait_time
+    print(&quot;当前第%d页，等待%ds&quot; % (curPage, wait_time))
+    time.sleep(wait_time)
+
+# 关闭数据库连接
+db.close()
+print(&quot;数据保存完毕，总执行时间：%ss，总等待时间：%ds&quot; % (str(datetime.datetime.now() - start), count_wait_time))
+</code></pre>
+<p>以下是我将total手动定义为560时的执行结果：</p>
+<pre><code>数据总量：560
+总页数：6
+预计总执行时间：62.22222222222222s
+当前第0页，等待4s
+当前第1页，等待6s
+当前第2页，等待5s
+当前第3页，等待2s
+当前第4页，等待8s
+当前第5页，等待8s
+数据保存完毕，总执行时间：0:01:12.207355s，总等待时间：33s
+</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>前后端分离的网站，都能使用这种方式爬取数据，如果数据在HTML中，就只能使用爬虫了，近期如果有时间，再出一篇爬虫的文章。</p>
+<h5 id="本文为原创文章，转载请注明出处（https-whark-cn）。"><a href="#本文为原创文章，转载请注明出处（https-whark-cn）。" class="headerlink" title="本文为原创文章，转载请注明出处（https://whark.cn）。"></a>本文为原创文章，转载请注明出处（<a href="https://whark.cn">https://whark.cn</a>）。</h5>
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2018/04/08/interview-experience-jjb/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/03/25/DI-and-IoC/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/avatar.jpg" alt="Whark's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        me@whark.cn
+        <b class="caret"></b>
+    </a>
+    
+
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="https://github.com/dphong" target="_blank" title="github">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">link</i>
+                        
+                        github
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://www.facebook.com/profile.php?id=100012235748867" target="_blank" title="facebook">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">link</i>
+                        
+                        facebook
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://weibo.com/p/1005055511274989/home" target="_blank" title="weibo">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">link</i>
+                        
+                        weibo
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://plus.google.com/u/0/115461663735732399003" target="_blank" title="google+">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">link</i>
+                        
+                        google+
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://t.me/Whark" target="_blank" title="telegram">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">link</i>
+                        
+                        telegram
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="mailto:me@whark.cn" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2020/04/">四月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/12/">十二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/03/">三月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/links" title="Friends">
+                
+                    <i class="material-icons sidebar-material-icons">group</i>
+                
+                Friends
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/tags" title="Tags">
+                
+                    <i class="material-icons sidebar-material-icons">loyalty</i>
+                
+                Tags
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/about" title="About">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                About
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!-- Sidebar Divider -->
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+                    
+        
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        
+            <script>
+    var adjustFooter = function() {
+        if( ($('#bottom').offset().top + $('#bottom').outerHeight(true) )<$(window).height() ) {
+            var footerBottom = $(window).height() - $('#bottom').outerHeight(true) - $('#bottom').offset().top;
+            footerBottom = Math.floor(footerBottom) + 20;
+            $('#bottom').css({'bottom': '-' + footerBottom + 'px', 'position': 'relative'});
+        }
+    };
+    $(document).ready(function() {
+        adjustFooter();
+    });
+</script>
+
+        
+        <!--Copyright-->
+        <div id="copyright">
+            ©2017-
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            <a href="/">Whark's Blog - 遥不可及</a>
+            · 
+            <a href="https://beian.miit.gov.cn/" target="_blank">皖ICP备17005522号</a>
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <div id="power">
+            <a target="_blank" rel="noopener" href="https://material.viosey.com" >Power By Material</a> ·
+            <a href="https://whark.cn/about.html">Whark</a>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/lazyload.min.js"></script>
+
+
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/js.min.js"></script>
+
+
+<!-- 代码高亮js -->
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/nprogress.js"></script>
+
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/smoothscroll.js"></script>
+
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+    <script>
+    var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: 'xml',
+            success: function( xmlResponse ) {
+                // get the contents from search data
+                var datas = $( 'entry', xmlResponse ).map(function() {
+                    return {
+                        title: $( 'title', this ).text(),
+                        content: $('content',this).text(),
+                        url: $( 'url' , this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function() {
+                    var str='<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = '';
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function(data) {
+                        var isMatch = true;
+                        var content_index = [];
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g,'').toLowerCase();
+                        var data_url = data.url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if(data_title !== '' && data_content !== '') {
+                            keywords.forEach(function(keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if( index_title < 0 && index_content < 0 ) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += '<li><a href="'+ data_url +'" class="search-result-title" target="_blank">'+ data_title;
+                            var content = data.content.trim().replace(/<[^>]+>/g, '');
+                            if (first_occur >= 0) {
+                                // cut out characters
+                                var start = first_occur - 6;
+                                var end = first_occur + 6;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 10;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, 'gi');
+                                    match_content = match_content.replace(regS, '<em class="search-keyword">'+keyword+'</em>');
+                                })
+                                str += '<p class="search-result">' + match_content + '...</p>' +'</a>';
+                            }
+                        }
+                    });
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    }
+</script>
+
+
+    <script>
+        var inputArea = document.querySelector('#search');
+        var getSearchFile = function() {
+            var path = 'search.xml';
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        if(inputArea) {
+            inputArea.onfocus = function() {
+                getSearchFile();
+            }
+        }
+    </script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- 代码高亮 -->
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- MathJax Load-->
+
+
+                </main>
+            </div>
+        </body>
+    
+</html>

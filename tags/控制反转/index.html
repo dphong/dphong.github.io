@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    
+    <title>标签: 控制反转 | Whark&#39;s Blog - 遥不可及</title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/favicon.png-img">
+    <link rel="icon" sizes="192x192" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/favicon.png-img">
+    <link rel="apple-touch-icon" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/favicon.png-img">
+    <link rel="stylesheet" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/css/animate.min.css">
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Whark">
+    <meta name="description" content="Creating and enjoy my life.">
+    <meta name="keywords" content="Whark dphong whark.cn">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Whark&#39;s Blog - 遥不可及">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://whark.cn">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="标签: 控制反转 | Whark&#39;s Blog - 遥不可及">
+    <meta property="og:description" content="Creating and enjoy my life.">
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/css/ie-blocker.css">
+
+        
+            <script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+<link rel="stylesheet" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/css/material.min.css">
+
+    
+<link rel="stylesheet" href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/css/style.css">
+
+    
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/darcula.min.css">
+
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #EEEEEE !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #EEEEEE;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #EEEEEE;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #EEEEEE;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body.random{
+        background-image: url(https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/background/1.jpg);
+      }
+      body.aaa {
+        background-image: url(https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/bg.png-img);
+      }
+    </style>
+
+
+<!-- body bg-image -->
+<style>
+.bg-fixed {
+    background-attachment: fixed;
+}
+
+amiao.min.css?v=161022:9
+.with-bg-image {
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    -webkit-transition: background 1s ease-in-out;
+    transition: background 1s ease-in-out;
+}
+</style>
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/jquery.min.js"></script>
+
+
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/queue.js"></script>
+
+
+
+
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("
+<link rel=\"stylesheet\" href=\"/css/uc.css\">
+");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+    <!-- Baidu Analytics -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {var hm = document.createElement('script');
+        hm.src = 'https://hm.baidu.com/hm.js?d3c6dab5868b247156623eb640eb3fb9';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+
+    
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-130448312-1', 'auto');ga('send', 'pageview');
+    </script>
+    
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy with-bg-image bg-fixed">
+        <!-- randomNum -->
+        <script>
+//定时执行
+if(IsPC())
+{
+    bgrandom();
+    window.setInterval(bgrandom, 200000); 
+}
+
+function bgrandom() 
+{ 
+    var randomNum = Math.floor(Math.random() * 40 + 1);
+    $("body").css("background-image", "url(" + "https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/background/" + randomNum + ".jpg-bg" + ")");
+    //document.body.style.backgroundImage="url(" + "https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/background/" + randomNum +".jpg-bg" + ")";
+}
+
+function IsPC() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+                "SymbianOS", "Windows Phone",
+                "iPad", "iPod"];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+}
+
+</script>
+        <div id="bg-images"></div>
+
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Index Module -->
+<div class="material-index mdl-grid">
+    
+    <div class="locate-thumbnail-symbol"></div>
+
+    <!-- Pin on top -->
+    
+
+    <!-- Normal Post -->
+    
+        
+        
+            <!-- Paradox Thumbnail -->
+            <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+        
+    
+
+        <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2018/03/25/DI-and-IoC/">PHP的容器 -- 依赖注入(DI) 和 控制反转(IoC)</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-800 mdl-card__supporting-text post_entry-content">
+        
+            本文内容大部分参考自：对PHP框架中的容器的理解
+
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2018/03/25/DI-and-IoC/" target="_self">继续阅读</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-800 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/avatar.jpg" width="44px" height="44px" alt="Whark's avatar">
+            </div>
+            <div>
+                <strong>Whark</strong>
+                <span>3月 25, 2018</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+            <!-- Category -->
+            <span class="post_entry-category">
+                
+            </span>
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+        
+        
+        
+    
+
+    
+
+    
+        <script>
+    var randomNum;
+
+    var locatePost = $('.locate-thumbnail-symbol').next();
+    for(var i = 0; i < 10; i++) {
+        randomNum = Math.floor(Math.random() * 35 + 1);
+
+        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
+        locatePost.children('.post_thumbnail-random').css('background-image', 'url(' + 'https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/random/' + randomNum + '.jpg-blog' + ')')
+
+        locatePost = locatePost.next();
+    }
+</script>
+
+    
+</div>
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/image/avatar.jpg" alt="Whark's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        me@whark.cn
+        <b class="caret"></b>
+    </a>
+    
+
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="https://github.com/dphong" target="_blank" title="github">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">link</i>
+                        
+                        github
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://www.facebook.com/profile.php?id=100012235748867" target="_blank" title="facebook">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">link</i>
+                        
+                        facebook
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://weibo.com/p/1005055511274989/home" target="_blank" title="weibo">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">link</i>
+                        
+                        weibo
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://plus.google.com/u/0/115461663735732399003" target="_blank" title="google+">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">link</i>
+                        
+                        google+
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://t.me/Whark" target="_blank" title="telegram">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">link</i>
+                        
+                        telegram
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="mailto:me@whark.cn" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2022/02/">二月 2022<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2020/04/">四月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/12/">十二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/08/">八月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/03/">三月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/links" title="Friends">
+                
+                    <i class="material-icons sidebar-material-icons">group</i>
+                
+                Friends
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/tags" title="Tags">
+                
+                    <i class="material-icons sidebar-material-icons">loyalty</i>
+                
+                Tags
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/about" title="About">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                About
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!-- Sidebar Divider -->
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+        
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        
+            <script>
+    var adjustFooter = function() {
+        if( ($('#bottom').offset().top + $('#bottom').outerHeight(true) )<$(window).height() ) {
+            var footerBottom = $(window).height() - $('#bottom').outerHeight(true) - $('#bottom').offset().top;
+            footerBottom = Math.floor(footerBottom) + 20;
+            $('#bottom').css({'bottom': '-' + footerBottom + 'px', 'position': 'relative'});
+        }
+    };
+    $(document).ready(function() {
+        adjustFooter();
+    });
+</script>
+
+        
+        <!--Copyright-->
+        <div id="copyright">
+            ©2017-
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            <a href="/">Whark's Blog - 遥不可及</a>
+            · 
+            <a href="https://beian.miit.gov.cn/" target="_blank">皖ICP备17005522号</a>
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <div id="power">
+            <a target="_blank" rel="noopener" href="https://material.viosey.com" >Power By Material</a> ·
+            <a href="https://whark.cn/about.html">Whark</a>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/lazyload.min.js"></script>
+
+
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/js.min.js"></script>
+
+
+<!-- 代码高亮js -->
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/nprogress.js"></script>
+
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    
+<script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/smoothscroll.js"></script>
+
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+    <script>
+    var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: 'xml',
+            success: function( xmlResponse ) {
+                // get the contents from search data
+                var datas = $( 'entry', xmlResponse ).map(function() {
+                    return {
+                        title: $( 'title', this ).text(),
+                        content: $('content',this).text(),
+                        url: $( 'url' , this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function() {
+                    var str='<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = '';
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function(data) {
+                        var isMatch = true;
+                        var content_index = [];
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g,'').toLowerCase();
+                        var data_url = data.url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if(data_title !== '' && data_content !== '') {
+                            keywords.forEach(function(keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if( index_title < 0 && index_content < 0 ) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += '<li><a href="'+ data_url +'" class="search-result-title" target="_blank">'+ data_title;
+                            var content = data.content.trim().replace(/<[^>]+>/g, '');
+                            if (first_occur >= 0) {
+                                // cut out characters
+                                var start = first_occur - 6;
+                                var end = first_occur + 6;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 10;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, 'gi');
+                                    match_content = match_content.replace(regS, '<em class="search-keyword">'+keyword+'</em>');
+                                })
+                                str += '<p class="search-result">' + match_content + '...</p>' +'</a>';
+                            }
+                        }
+                    });
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    }
+</script>
+
+
+    <script>
+        var inputArea = document.querySelector('#search');
+        var getSearchFile = function() {
+            var path = 'search.xml';
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        if(inputArea) {
+            inputArea.onfocus = function() {
+                getSearchFile();
+            }
+        }
+    </script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- 代码高亮 -->
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- MathJax Load-->
+
+
+                </main>
+            </div>
+        </body>
+    
+</html>

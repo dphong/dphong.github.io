@@ -1,0 +1,1617 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+    
+    <entry>
+      <title><![CDATA[晒太阳]]></title>
+      <url>https://whark.cn/2022/02/27/sunshine/</url>
+      <content type="html"><![CDATA[<p>泡了两杯茶，一杯女儿红，一杯轻碧，结论就是别人的更好喝</p>
+<p>时不时打一下四喜，不让它睡觉，以此报复它早上不让我睡觉</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> life </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[How to build a network disk server on Linux]]></title>
+      <url>https://whark.cn/2020/04/11/use-ownCloud-to-build-a-network-server-on-linux/</url>
+      <content type="html"><![CDATA[<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ol>
+<li><p>准备好Linux服务器，本地或线上均可,本文以centos8为例。(推荐阿里云的共享计算实例，性价比较高，自己家里有网络条件搞本地服务器当然更好)</p>
+</li>
+<li><p>安装好 <code>docker-ce</code> 和 <code>docker-compose</code>, Reference: <a href="https://www.linuxtechi.com/install-docker-ce-centos-8-rhel-8/">How to Install Docker CE on CentOS 8 / RHEL 8</a></p>
+</li>
+</ol>
+<pre><code class="shell">  # Step1: Enable Docker CE Repository
+  dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+
+  # Step2: Install Docker CE using dnf command
+  dnf install docker-ce --nobest -y
+  systemctl start docker
+  systemctl enable docker
+
+  # Step3: Install Docker Compose
+  curl -L &quot;https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
+  chmod +x /usr/local/bin/docker-compose
+  ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+  # Setp4: Modify Docker registry mirrors to use 163 registry mirrors
+  vim /etc/docker/daemon.json
+  &#123;
+    &quot;registry-mirrors&quot;: [&quot;http://hub-mirror.c.163.com&quot;]
+  &#125;
+  systemctl restart docker.service
+</code></pre>
+<ol start="3">
+<li><p>安装 <code>ownCloud</code>, Reference: <a href="https://doc.owncloud.org/server/10.4/admin_manual/installation/docker/">Installing ownCloud with Docker</a></p>
+<pre><code class="shell"># Create a new project directory
+mkdir owncloud-docker-server
+
+cd owncloud-docker-server
+
+# Copy docker-compose.yml from the GitHub repository
+wget https://raw.githubusercontent.com/owncloud/docs/master/modules/admin_manual/examples/installation/docker/docker-compose.yml
+
+# Create the environment configuration file
+cat &lt;&lt; EOF &gt; .env
+OWNCLOUD_VERSION=10.4
+OWNCLOUD_DOMAIN=localhost
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=admin
+HTTP_PORT=8080
+EOF
+
+# Build and start the container
+docker-compose up -d
+</code></pre>
+</li>
+</ol>
+<ol start="5">
+<li><p>挂载阿里云OSS到服务器，当做硬盘来存储网盘中的数据</p>
+<ul>
+<li>在阿里云上<a href="https://oss.console.aliyun.com/bucket">创建一个OSS的Bucket</a>，和ECS选择同区域，存储类型选标准存储，读写权限私有，服务器端加密设置为AES256加密，其余设置默认。</li>
+<li>需要创建一个只能使用OSS的用户，来通过API访问OSS中的文件，<a href="https://ram.console.aliyun.com/users">RAM访问控制</a>,创建时设置为只允许编程访问，并授予<code>AliyunOSSFullAccess</code>权限。</li>
+<li>安装ossfs来挂载oss到服务器</li>
+</ul>
+<pre><code>
+ [root@test]# df -h | grep -v &#39;/var/lib/docker&#39;
+  Filesystem      Size  Used Avail Use% Mounted on
+  devtmpfs        1.9G     0  1.9G   0% /dev
+  tmpfs           1.9G     0  1.9G   0% /dev/shm
+  tmpfs           1.9G  684K  1.9G   1% /run
+  tmpfs           1.9G     0  1.9G   0% /sys/fs/cgroup
+  /dev/vda1        20G  4.6G   16G  23% /
+  tmpfs           379M     0  379M   0% /run/user/0
+  ossfs           256T     0  256T   0% /data/ossfs
+</code></pre><p><a href="https://help.aliyun.com/document_detail/32196.html">https://help.aliyun.com/document_detail/32196.html</a></p>
+</li>
+</ol>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> Docker </tag>
+            
+            <tag> Centos </tag>
+            
+            <tag> netdisk </tag>
+            
+            <tag> NextCloud </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[我的2019]]></title>
+      <url>https://whark.cn/2019/12/31/2019/</url>
+      <content type="html"><![CDATA[<p>再有几分钟就2020年了，今年可真够失败的，年初订的目标刚刚计算了一下完成度，才 44.2%，不及预期，下面贴一张2019的计划和完成度核验：</p>
+<p><img src="https://oss.whark.cn/blog/posts/img/2019%E5%B9%B4%E8%AE%A1%E5%88%92%E5%AE%8C%E6%88%90%E5%BA%A6.png" alt="2019年计划完成度"></p>
+<p>完成情况堪忧，2020年要更加自律。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> life </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[程序创建过多临时文件，导致系统inode不足问题排查]]></title>
+      <url>https://whark.cn/2019/08/25/selenium-troubleshooting/</url>
+      <content type="html"><![CDATA[<p>尝试运行 selenium 程序，发现如下报错</p>
+<pre><code>easyprocess.EasyProcessCheckInstalledError: cmd=[&#39;Xvfb&#39;, &#39;-help&#39;]
+OSError=None
+Program install error!
+You can install it in terminal:
+sudo apt-get install xvfb
+</code></pre><p>尝试安装 xvfb</p>
+<pre><code class="shell">sudo apt-get install xvfb
+</code></pre>
+<p>发现提示磁盘空间不足，No space left on device</p>
+<pre><code>dpkg: unrecoverable fatal error, aborting:
+unable to create &#39;/var/lib/dpkg/updates/tmp.i&#39;: No space left on device
+</code></pre><p>查看磁盘剩余空间，发现空间还很充裕</p>
+<p>root@aliyun:~/python# df -h</p>
+<pre><code>Filesystem      Size  Used Avail Use% Mounted on
+udev            3.9G     0  3.9G   0% /dev
+tmpfs           798M  3.1M  795M   1% /run
+/dev/vda1        40G   14G   24G  37% /
+tmpfs           3.9G     0  3.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           3.9G     0  3.9G   0% /sys/fs/cgroup
+/dev/vdb1       196G   90G   96G  49% /opt
+/dev/vdc1        98G   11G   83G  12% /data
+tmpfs           798M     0  798M   0% /run/user/0
+</code></pre><p>再次尝试安装 xvfb，安装成功，尝试运行 saver，错误依旧</p>
+<p>测试运行最基础的 selenium 功能</p>
+<pre><code class="python">from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from pyvirtualdisplay import Display
+
+display = Display(visible=0, size=(1920, 1000))
+display.start()
+options = Options()
+options.add_argument(&quot;start-maximized&quot;)
+driver = webdriver.Chrome()
+driver.get(&#39;https://www.google.com&#39;)
+print(&quot;Page Title is : %s&quot; %driver.title)
+driver.quit()
+display.stop()
+</code></pre>
+<p>发现如下报错<br>    unable to create ‘/tmp/.com.google.Chrome.DFid4m’: No space left on device</p>
+<p>到 /tmp 下查看，发现超级多 <em>.com.google.Chrome</em> 开头的文件，猜想可能是因为很多小文件，把系统的 inode 用完了</p>
+<p>查看磁盘inode使用情况，发现系统inode的确已经用完了</p>
+<p>root@aliyun:~/python# df -i</p>
+<pre><code>Filesystem       Inodes   IUsed    IFree IUse% Mounted on
+udev            1013942     420  1013522    1% /dev
+tmpfs           1021032    1105  1019927    1% /run
+/dev/vda1       2621440 2621438        2  100% /
+tmpfs           1021032       1  1021031    1% /dev/shm
+tmpfs           1021032       2  1021030    1% /run/lock
+tmpfs           1021032      18  1021014    1% /sys/fs/cgroup
+/dev/vdb1      13107200  690724 12416476    6% /opt
+/dev/vdc1       6553600  120731  6432869    2% /data
+tmpfs           1021032     275  1020757    1% /run/user/0
+</code></pre><p>尝试使用 *rm -rf /tmp/.com.google.Chrome.** 删除，发现如下报错</p>
+<pre><code>-bash: /bin/rm: Argument list too long
+</code></pre><p>尝试多种方法想快速删除，无果（/tmp 文件夹下有如 tmux-0 的文件，tmux 的 session 保存在这个文件夹，如果删掉，tmux可能会出问题，所以选择只删除 chrome 的临时文件，保留其它文件）</p>
+<p>想到了一种笨办法：</p>
+<pre><code class="shell">rm -rf /tmp/.com.google.Chrome.1*
+rm -rf /tmp/.com.google.Chrome.2*
+...
+rm -rf /tmp/.com.google.Chrome.z*
+</code></pre>
+<p>于是就有了下面的这个shell</p>
+<pre><code class="shell">#!/bin/bash
+
+chars=(&quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot; &quot;P&quot; &quot;Q&quot; &quot;R&quot; &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot; &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot; &quot;8&quot; &quot;9&quot; &quot;0&quot;)
+for value in $&#123;chars[@]&#125;
+do
+&#123;
+    echo &quot;/tmp/.com.google.Chrome.&quot;$value&quot;*&quot;
+    rm -rf /tmp/.com.google.Chrome.&quot;$value&quot;*
+&#125;&amp;
+done
+</code></pre>
+<p>再次查看 inode，恢复正常，启动 saver 正常运行 </p>
+<p>root@aliyun:/tmp# df -i</p>
+<pre><code>Filesystem       Inodes   IUsed    IFree IUse% Mounted on 
+udev            1013942     420  1013522    1% /dev 
+tmpfs           1021032    1105  1019927    1% /run 
+/dev/vda1       2621440 1634826   986614   63% / 
+tmpfs           1021032       1  1021031    1% /dev/shm 
+tmpfs           1021032       2  1021030    1% /run/lock 
+tmpfs           1021032      18  1021014    1% /sys/fs/cgroup 
+/dev/vdb1      13107200  691129 12416071    6% /opt 
+/dev/vdc1       6553600  120747  6432853    2% /data 
+tmpfs           1021032     275  1020757    1% /run/user/0 
+</code></pre>]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> Linux </tag>
+            
+            <tag> selenium </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[使用GitHub的Markdown写博客]]></title>
+      <url>https://whark.cn/2019/08/10/use-github-write-blog/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>本篇博客就是使用此方法在GitHub上创作</p>
+</blockquote>
+<p>基础建设：先在服务器上搭建好 Hexo 环境，可以参照这篇博客 <a href="https://www.jianshu.com/p/75efaba08a34">Hexo环境搭建2018年5月版</a>,完成之后的效果就是，访问自定义域名或者 <em>xxx.github.io</em> 能访问到自己的博客。</p>
+<p>本文背景：但这样有一个限制，必须在搭建 hexo 的电脑上才能写作，并更新到博客，不太方便，考虑到 GitHub 支持Markdown 语法，Hexo 的写作也是使用 Markdown，所以就思考是否可以在 Github 上直接写作，更新博客。</p>
+<p>解决方案：使用 Github 的 Webhooks 工具，监听代码仓库 push 状态，如果代码有新的 commit，就触发一次 Webhooks，POST 一份数据到自定义的 URL 上 (Reference: <a href="https://whark.cn/2017/06/02/set-github-webhook/">转载：配置Github Webhooks自动部署项目</a> )，具体思路如下：</p>
+<p><img src="http://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/Simplified%20Writing.png" alt="Simplified%20Writing.png"></p>
+<p>最终的效果就是博客就展示在 GitHub Pages(<a href="dphong.github.io">dphong.github.io</a>) 和 自己的服务器(<a href="https://whark.cn">https://whark.cn</a>)上了。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Github </tag>
+            
+            <tag> Webhooks </tag>
+            
+            <tag> Hexo </tag>
+            
+            <tag> Node </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Python matplotlib 配置中文字体]]></title>
+      <url>https://whark.cn/2019/03/18/python-matplotlib-chinese/</url>
+      <content type="html"><![CDATA[<p>Python matplotlib 配置中文字体</p>
+<ol>
+<li>下载中文字体（黑体，下载对应系统的版本，Unix系统下载For MAC版）<blockquote>
+<p><a href="https://www.fontpalace.com/font-details/SimHei/">https://www.fontpalace.com/font-details/SimHei/</a></p>
+</blockquote>
+</li>
+<li>桌面版系统，解压之后直接在系统中安装好，服务器版系统解压好备用</li>
+<li>在Python中运行下面代码，找到matplotlib字体文件夹<pre><code class="python">import matplotlib
+matplotlib.matplotlib_fname()
+# 输出
+&gt;&gt; &#39;/usr/local/lib/python3.6/dist-packages/matplotlib/mpl-data/matplotlibrc&#39;
+</code></pre>
+</li>
+<li>字体文件夹路径为xxx/<strong>matplotlib/mpl-data/fonts/ttf</strong>，将SimHei.ttf拷贝到ttf文件夹下</li>
+<li>修改配置文件matplotlibrc，路径为第三步查询到的路径，修改下面三项配置<pre><code class="python"># 取消注释
+font.family      : sans-serif     
+# 取消注释 添加黑体 SimHei,
+font.sans-serif   : SimHei, Bitstream Vera Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif
+# 取消注释 设置为 False
+axes.unicode_minus : False，#作用就是解决负号&#39;-&#39;显示为方块的问题
+</code></pre>
+</li>
+<li>最重要的一步，<strong>重载配置</strong>，在Python中运行下面代码<pre><code class="python">from matplotlib.font_manager import _rebuild
+_rebuild()
+</code></pre>
+至此，就能正常显示中文了</li>
+</ol>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> matplotlib </tag>
+            
+            <tag> 字体 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[记一次安心记加班面试记录]]></title>
+      <url>https://whark.cn/2018/04/08/interview-experience-jjb/</url>
+      <content type="html"><![CDATA[<p>简历处理很快，放假投递的，第一个工作日就收到面试邀请了，一面面试官很年轻，也很有技术范，聊的很开心，有些问题没有想出来，面试官引导的非常好，思维很活跃，很希望能一起共事，二面面试官问的问题都比较笼统，不是很具体，回答的时候我自己也没有问清楚具体应用场景，没有答到点上，经验也比较少，所有毫无悬念的挂了，但两位面试官脾气都很好，面试过程中收获很多，十分感谢，有一些没有回答出来，或者回答不够好的问题，予以记录：</p>
+<ol>
+<li>我使用的Token是如何保障信息安全的，使用的对称加密还是非对称加密，如果我离职了，知道Token的生成算法，能不能随意构造用户Token，为什么使用Token而不使用Session？</li>
+<li>有没有用过MQ，知不知道RPC，还用过哪些消息队列，知不知道Redis的垃圾回收机制，那PHP的呢，如果是常驻进程呢？</li>
+<li>Nginx和PHP之间是怎么工作的，Nginx的负载均衡有哪些常用算法和用法，Nginx的负载均衡是几层代理？</li>
+<li>数据库的事务隔离级别有哪些，有用到过哪些？怎么解决并发读脏数据的问题？</li>
+<li>使用git进行版本控制时，团队有哪些使用规范？如果自己的提交被冲掉了，如果恢复，是合并后发布还是发布后合并，如果发布了，有bug如果解决，分支该如何管理？</li>
+<li>Symfony框架和ThinkPHP框架有哪些区别和共同点，模板引擎有哪些，模板引擎是如何工作的，谈谈Symfony的依赖注入？</li>
+</ol>
+<h5 id="1-我使用的Token是如何保障信息安全的，使用的对称加密还是非对称加密，如果我离职了，知道Token的生成算法，能不能随意构造用户Token，为什么使用Token而不使用Session？"><a href="#1-我使用的Token是如何保障信息安全的，使用的对称加密还是非对称加密，如果我离职了，知道Token的生成算法，能不能随意构造用户Token，为什么使用Token而不使用Session？" class="headerlink" title="1. 我使用的Token是如何保障信息安全的，使用的对称加密还是非对称加密，如果我离职了，知道Token的生成算法，能不能随意构造用户Token，为什么使用Token而不使用Session？"></a>1. 我使用的Token是如何保障信息安全的，使用的对称加密还是非对称加密，如果我离职了，知道Token的生成算法，能不能随意构造用户Token，为什么使用Token而不使用Session？</h5><h5 id="2-有没有用过MQ，知不知道RPC，还用过哪些消息队列，知不知道Redis的垃圾回收机制，那PHP的呢，如果是常驻进程呢？"><a href="#2-有没有用过MQ，知不知道RPC，还用过哪些消息队列，知不知道Redis的垃圾回收机制，那PHP的呢，如果是常驻进程呢？" class="headerlink" title="2. 有没有用过MQ，知不知道RPC，还用过哪些消息队列，知不知道Redis的垃圾回收机制，那PHP的呢，如果是常驻进程呢？"></a>2. 有没有用过MQ，知不知道RPC，还用过哪些消息队列，知不知道Redis的垃圾回收机制，那PHP的呢，如果是常驻进程呢？</h5><blockquote>
+<p>MQ - 消息队列（Message Queue），队列结构的中间件，消息放入后，不需要立即处理，由订阅者/消费者按顺序处理，一般的应用场景：流量削峰、排序保证、解耦、异步通信、扩展性。</p>
+</blockquote>
+<blockquote>
+<p>RPC - 远程过程调用（Remote Procedure Call），通过网络从远程计算机上请求服务。</p>
+</blockquote>
+<p>两者的异同：</p>
+<pre><code>RPC系统结构：
++----------+     +----------+
+| Consumer | &lt;=&gt; | Provider |
++----------+     +----------+
+Consumer调用的Provider提供的服务。
+
+Message Queue系统结构：
++--------+     +-------+     +----------+
+| Sender | &lt;=&gt; | Queue | &lt;=&gt; | Receiver |
++--------+     +-------+     +----------+
+Sender发送消息给Queue；Receiver从Queue拿到消息来处理。
+</code></pre><table>
+<thead>
+<tr>
+<th style="text-align:center">RPC</th>
+<th style="text-align:center">MQ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">请求响应模式</td>
+<td style="text-align:center">生产者消费者模式</td>
+</tr>
+<tr>
+<td style="text-align:center">同步（也可以异步）</td>
+<td style="text-align:center">异步</td>
+</tr>
+<tr>
+<td style="text-align:center">面向动作</td>
+<td style="text-align:center">面向数据</td>
+</tr>
+<tr>
+<td style="text-align:center">无存储</td>
+<td style="text-align:center">有存储</td>
+</tr>
+<tr>
+<td style="text-align:center">解耦</td>
+<td style="text-align:center">解耦</td>
+</tr>
+</tbody>
+</table>
+<p>常见的消息队列： MQ、Redis 、MySQL</p>
+<p>消息队列触发机制：死循环、定时任务、守护进程（类似于PHP-FPM）</p>
+<h5 id="Redis内存回收"><a href="#Redis内存回收" class="headerlink" title="Redis内存回收"></a>Redis内存回收</h5><p>引用计数算法</p>
+<blockquote>
+<p>在创建一个新对象时， 引用计数的值会被初始化为 1 ；<br>当对象被一个新程序使用时， 它的引用计数值会被增一；<br>当对象不再被一个程序使用时， 它的引用计数值会被减一；<br>当对象的引用计数值变为 0 时， 对象所占用的内存会被释放。</p>
+</blockquote>
+<p>LRU算法<br>数据结构： <strong>HashMap + Double LinkedList</strong>，时间复杂度O(1)<br>当内存达到MAX_MEMORY上限时会触发响应的溢出控制策略，Redis支持以下6种策略</p>
+<blockquote>
+<p>noeviction：默认策略，不会删除任何数据，拒绝所有写入操作并返回客户端错误信息，此时Redis只响应读操作。<br>volatitle-rlu：根据LRU算法删除设置了超时属性的键，知道腾出足够空间为止。如果没有可删除的键对象，回退到noeviction策略。<br>allkeys-lru：根据LRU算法删除键，不管数据有没有设置超时属性，直到腾出足够空间为止。<br>allkeys-random：随机删除所有键，知道腾出足够空间为止。<br>volatitle-random：随机删除过期键，知道腾出足够空间为止。<br>volatitle-ttl：根据键值对象的ttl属性，删除最近将要过期数据。如果没有，回退到noeviction策略</p>
+</blockquote>
+<h5 id="PHP内存回收"><a href="#PHP内存回收" class="headerlink" title="PHP内存回收"></a>PHP内存回收</h5><p>也是引用计数算法</p>
+<h5 id="3-Nginx和PHP之间是怎么工作的，Nginx的负载均衡有哪些常用算法和用法，Nginx的负载均衡是几层代理？"><a href="#3-Nginx和PHP之间是怎么工作的，Nginx的负载均衡有哪些常用算法和用法，Nginx的负载均衡是几层代理？" class="headerlink" title="3. Nginx和PHP之间是怎么工作的，Nginx的负载均衡有哪些常用算法和用法，Nginx的负载均衡是几层代理？"></a>3. Nginx和PHP之间是怎么工作的，Nginx的负载均衡有哪些常用算法和用法，Nginx的负载均衡是几层代理？</h5><h5 id="Nginx和PHP之间是怎么工作的："><a href="#Nginx和PHP之间是怎么工作的：" class="headerlink" title="Nginx和PHP之间是怎么工作的："></a>Nginx和PHP之间是怎么工作的：</h5><blockquote>
+<p>CGI（Common Gateway Interface）协议 和 FastCGI协议，是Web Server与后台语言交互的协议，通过这个协议，开发者可以使用任何语言处理Web Server发来的请求。<br>FPM（FastCGI Process Manager），它是FastCGI的实现，是一个进程管理器，包含master进程和worker两种进程。master进程只有一个，负责监听端口，接受来自Web Server的请求，而worker进程一般有多个，每个进程内部都嵌入了一个PHP解释器，是PHP代码真正执行的地方。</p>
+</blockquote>
+<p>Nginx负责监听网站的80端口，然后将所有以.php结尾的请求都交给FastCGI模块处理，从而把所有PHP的请求都交给fpm处理，再把处理结果通过nginx返回给客户端。</p>
+<h5 id="Nginx负载均衡常用算法："><a href="#Nginx负载均衡常用算法：" class="headerlink" title="Nginx负载均衡常用算法："></a>Nginx负载均衡常用算法：</h5><ol>
+<li>轮询（默认）：每个请求按时间顺序逐一分配到不同的后端服务器，如果后端某台服务器宕机，则自动剔除故障机器，使用户访问不受影响。</li>
+<li>weight：指定轮询权重，weight值越大，分配到的几率就越高，主要用于后端每台服务器性能不均衡的情况。</li>
+<li>ip_hash：每个请求按访问IP的哈希结果分配，这样每个访客固定访问一个后端服务器，可以有效的解决动态网页存在的session共享问题。</li>
+<li>fair（第三方）：更智能的一个负载均衡算法，此算法可以根据页面大小和加载时间长短智能地进行负载均衡，也就是根据后端服务器的响应时间来分配请求，响应时间短的优先分配。如果想要使用此调度算法，需要Nginx的upstream_fair模块。</li>
+<li>url_hash（第三方）：按访问URL的哈希结果来分配请求，使每个URL定向到同一台后端服务器，可以进一步提高后端缓存服务器的效率。如果想要使用此调度算法，需要Nginx的hash软件包。</li>
+</ol>
+<h5 id="Nginx的负载均衡是几层代理："><a href="#Nginx的负载均衡是几层代理：" class="headerlink" title="Nginx的负载均衡是几层代理："></a>Nginx的负载均衡是几层代理：</h5><p>负载均衡器通常称为四层交换机或七层交换机。四层交换机主要分析IP层及TCP/UDP层，实现四层流量负载均衡。七层交换机除了支持四层负载均衡以外，还有分析应用层的信息，如HTTP协议URI或Cookie信息。<br>Nginx工作在七层代理，可以针对HTTP应用本身来做分流策略，比如针对域名、目录结构等。</p>
+<h5 id="4-数据库的事务隔离级别有哪些，有用到过哪些？怎么解决并发读脏数据的问题？"><a href="#4-数据库的事务隔离级别有哪些，有用到过哪些？怎么解决并发读脏数据的问题？" class="headerlink" title="4.数据库的事务隔离级别有哪些，有用到过哪些？怎么解决并发读脏数据的问题？"></a>4.数据库的事务隔离级别有哪些，有用到过哪些？怎么解决并发读脏数据的问题？</h5><h5 id="5-使用git进行版本控制时，团队有哪些使用规范？如果自己的提交被冲掉了，如果恢复，是合并后发布还是发布后合并，如果发布了，有bug如果解决，分支该如何管理？"><a href="#5-使用git进行版本控制时，团队有哪些使用规范？如果自己的提交被冲掉了，如果恢复，是合并后发布还是发布后合并，如果发布了，有bug如果解决，分支该如何管理？" class="headerlink" title="5.使用git进行版本控制时，团队有哪些使用规范？如果自己的提交被冲掉了，如果恢复，是合并后发布还是发布后合并，如果发布了，有bug如果解决，分支该如何管理？"></a>5.使用git进行版本控制时，团队有哪些使用规范？如果自己的提交被冲掉了，如果恢复，是合并后发布还是发布后合并，如果发布了，有bug如果解决，分支该如何管理？</h5><h5 id="6-Symfony框架和ThinkPHP框架有哪些区别和共同点，模板引擎有哪些，模板引擎是如何工作的，谈谈Symfony的依赖注入？"><a href="#6-Symfony框架和ThinkPHP框架有哪些区别和共同点，模板引擎有哪些，模板引擎是如何工作的，谈谈Symfony的依赖注入？" class="headerlink" title="6.Symfony框架和ThinkPHP框架有哪些区别和共同点，模板引擎有哪些，模板引擎是如何工作的，谈谈Symfony的依赖注入？"></a>6.Symfony框架和ThinkPHP框架有哪些区别和共同点，模板引擎有哪些，模板引擎是如何工作的，谈谈Symfony的依赖注入？</h5>]]></content>
+      
+        
+        <tags>
+            
+            <tag> PHP </tag>
+            
+            <tag> 面试记录 </tag>
+            
+            <tag> Nginx </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[使用Python抓取数据]]></title>
+      <url>https://whark.cn/2018/03/27/use-python-crawl-lawyer-data/</url>
+      <content type="html"><![CDATA[<p>本文以律师行业信用服务平台为例，介绍如何对页面数据进行提取，保存。</p>
+<h3 id="开始：页面数据分析"><a href="#开始：页面数据分析" class="headerlink" title="开始：页面数据分析"></a>开始：页面数据分析</h3><p>打开 <a href="http://credit.gdlawyer.org.cn/front/indexFront/listDetail?type=1">广东省律师行业信用信息服务平台</a> ，F12打开控制台，点击Network，刷新界面，发现了向API请求的接口，返回的资源是 <strong>Json</strong> 格式的，而且资源中的数据就是页面上的，就能确认页面中的律师信息就是通过这个接口读取的，本站点是采用前后端分离写的，如果没有类似的请求，数据是直接渲染在HTML中，说明HTML在后端已经处理好了，只能按标签，分离数据了。</p>
+<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/lawyer_find_api_address.jpg" alt="lawyer_find_api_address"></p>
+<h3 id="尝试：API接口调用"><a href="#尝试：API接口调用" class="headerlink" title="尝试：API接口调用"></a>尝试：API接口调用</h3><p>看看API能不能正常访问，如下图：</p>
+<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/lawyer_api_address_try.jpg" alt="lawyer_api_address_try"></p>
+<p>观察参数，发现参数就是筛选项、分页大小、偏移量、和13位的时间戳。</p>
+<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/lawyer_api_address_analysis.png" alt="lawyer_api_address_analysis"></p>
+<p>把参数含义弄明白后，使用Python来请求API数据</p>
+<pre><code class="python">import requests
+
+result = requests.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=2&amp;_=1522140226962&#39;)
+
+print(result.text)
+</code></pre>
+<p>运行的结果如下：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;page-info start-row=&quot;1&quot; is-last-page=&quot;false&quot; has-next-page=&quot;true&quot; first-page=&quot;1&quot; pages=&quot;7816&quot; has-previous-page=&quot;false&quot; size=&quot;5&quot; pre-page=&quot;0&quot; is-first-page=&quot;true&quot; end-row=&quot;5&quot; next-page=&quot;2&quot; navigate-pages=&quot;8&quot; last-page=&quot;8&quot; page-num=&quot;1&quot; page-size=&quot;5&quot; total=&quot;39078&quot;&gt;
+    &lt;rows xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:java=&quot;http://java.sun.com&quot; empty=&quot;false&quot; xsi:type=&quot;java:java.util.HashMap&quot; /&gt;
+    &lt;rowsxmlns:xsi xmlns:java=&quot;http://java.sun.com&quot; empty=&quot;false&quot; xsi:type=&quot;java:java.util.HashMap&quot; /&gt;
+    &lt;rows xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:java=&quot;http://java.sun.com&quot; empty=&quot;false&quot; xsi:type=&quot;java:java.util.HashMap&quot; /&gt;
+    &lt;rows xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:java=&quot;http://java.sun.com&quot; empty=&quot;false&quot; xsi:type=&quot;java:java.util.HashMap&quot; /&gt;
+    &lt;rows xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:java=&quot;http://java.sun.com&quot; empty=&quot;false&quot; xsi:type=&quot;java:java.util.HashMap&quot; /&gt;
+    &lt;navigatepage-nums&gt;1&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;2&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;3&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;4&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;5&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;6&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;7&lt;/navigatepage-nums&gt;
+    &lt;navigatepage-nums&gt;8&lt;/navigatepage-nums&gt;
+&lt;/page-info&gt;
+</code></pre>
+<p>发现并不是之前在浏览器中看到的JSON格式，而是xml格式的，所以可能是Header中没有指定接受json格式，所以添加一下Header：</p>
+<pre><code class="python">import requests
+
+s = requests.Session()
+headers = &#123;&#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;&#125;
+s.headers.update(headers)
+
+result = s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=2&amp;_=1522140226962&#39;)
+print(result.text)
+</code></pre>
+<p>加了一个Accept的Header就好了，返回结果如下：</p>
+<pre><code class="json">&#123;
+    &quot;pageSize&quot;: 2,
+    &quot;size&quot;: 2,
+    &quot;orderBy&quot;: null,
+    &quot;startRow&quot;: 1,
+    &quot;endRow&quot;: 2,
+    &quot;total&quot;: 39078,
+    &quot;pages&quot;: 19539,
+    &quot;rows&quot;: [
+        &#123;
+            &quot;QUALIFICATIONDATE&quot;: &quot;1991-07-01&quot;,
+            &quot;SXXX&quot;: 0,
+            &quot;ISLEADER&quot;: &quot;1&quot;,
+            &quot;SEX&quot;: &quot;1&quot;,
+            &quot;LAWYER_NAME&quot;: &quot;丁一元&quot;,
+            &quot;FIRSTTIME&quot;: &quot;1997-11-02&quot;,
+            &quot;EDUCATION&quot;: &quot;31&quot;,
+            &quot;CHECKYEAR&quot;: &quot;2016&quot;,
+            &quot;NATION&quot;: &quot;1&quot;,
+            &quot;POLITICALSTATUS&quot;: &quot;12&quot;,
+            &quot;LAWYERID&quot;: &quot;4513&quot;,
+            &quot;PHOTOTYPE&quot;: &quot;2&quot;,
+            &quot;OFFICENAME&quot;: &quot;北京市盈科(广州)律师事务所&quot;,
+            &quot;PARTNERTYPE&quot;: &quot;30&quot;,
+            &quot;ID&quot;: &quot;4513&quot;,
+            &quot;CERSTATUS&quot;: &quot;10&quot;,
+            &quot;AGE&quot;: 52,
+            &quot;OFFICEID&quot;: &quot;106280&quot;,
+            &quot;LAWYER_TYPE&quot;: &quot;10&quot;,
+            &quot;CERTIFICATE_TIME&quot;: &quot;1997-11-02&quot;,
+            &quot;SKILLALL&quot;: &quot;117,&quot;,
+            &quot;CERTIFICATENO&quot;: &quot;14401199710164293&quot;,
+            &quot;ROW_ID&quot;: 1,
+            &quot;RESULT&quot;: &quot;10&quot;,
+            &quot;QUALIFICATION_NUM&quot;: &quot;赣0187&quot;
+        &#125;,
+        &#123;
+            &quot;QUALIFICATIONDATE&quot;: &quot;2011-03-14&quot;,
+            &quot;SXXX&quot;: 0,
+            &quot;ISLEADER&quot;: &quot;1&quot;,
+            &quot;SEX&quot;: &quot;2&quot;,
+            &quot;LAWYER_TYPE&quot;: &quot;10&quot;,
+            &quot;CERTIFICATE_TIME&quot;: &quot;2015-11-20&quot;,
+            &quot;LAWYER_NAME&quot;: &quot;丁一粟&quot;,
+            &quot;FIRSTTIME&quot;: &quot;2015-11-20&quot;,
+            &quot;CERTIFICATENO&quot;: &quot;14403201511624464&quot;,
+            &quot;EDUCATION&quot;: &quot;14&quot;,
+            &quot;CHECKYEAR&quot;: &quot;2016&quot;,
+            &quot;ROW_ID&quot;: 2,
+            &quot;NATION&quot;: &quot;3&quot;,
+            &quot;POLITICALSTATUS&quot;: &quot;12&quot;,
+            &quot;LAWYERID&quot;: &quot;219833&quot;,
+            &quot;PHOTOTYPE&quot;: &quot;2&quot;,
+            &quot;OFFICENAME&quot;: &quot;北京大成(深圳)律师事务所&quot;,
+            &quot;PARTNERTYPE&quot;: &quot;30&quot;,
+            &quot;ID&quot;: &quot;219833&quot;,
+            &quot;CERSTATUS&quot;: &quot;10&quot;,
+            &quot;RESULT&quot;: &quot;10&quot;,
+            &quot;QUALIFICATION_NUM&quot;: &quot;A20104301040236&quot;,
+            &quot;AGE&quot;: 38,
+            &quot;OFFICEID&quot;: &quot;102020&quot;
+        &#125;
+    ],
+    &quot;firstPage&quot;: 1,
+    &quot;prePage&quot;: 0,
+    &quot;nextPage&quot;: 2,
+    &quot;lastPage&quot;: 8,
+    &quot;isFirstPage&quot;: true,
+    &quot;isLastPage&quot;: false,
+    &quot;hasPreviousPage&quot;: false,
+    &quot;hasNextPage&quot;: true,
+    &quot;navigatePages&quot;: 8,
+    &quot;navigatepageNums&quot;: [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+    ],
+    &quot;pageNum&quot;: 1
+&#125;
+</code></pre>
+<h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><p>至此，就能想想数据怎么存储了，返回的数据中 <strong>“total”: 39078</strong> ，说明总共有39079条数据，可以设置分页大小，可以按照100条一次进行处理，先抓取第一页，看看数据总量是多少，然后再确认分页数，正式进行爬取，输出每一行数据中的律师的姓名，代码如下：</p>
+<pre><code>import requests
+import xmltodict, json
+import time, math
+import random
+
+s = requests.Session()
+headers = &#123;&#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;&#125;
+s.headers.update(headers)
+
+resu =  s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=1&amp;_=&#39; + str(round(time.time() * 1000)))
+data = json.loads(resu.text)
+
+total = data[&#39;total&#39;]
+limit = 100
+page = math.ceil(total / limit)
+
+print(limit)
+print(page)
+
+for curPage in range(page):
+    resu =  s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=&#39; + str(curPage) + &#39;&amp;limit=&#39; + str(limit) + &#39;&amp;_=&#39; + str(round(time.time() * 1000)))
+
+    # Json to dist
+    data = json.loads(resu.text)
+
+    # 律师数据
+    rows = data[&#39;rows&#39;]
+    # 遍历数据
+
+    for value in rows:
+        print(value[&#39;LAWYER_NAME&#39;])
+
+    # 每抓取1页，随机等待几秒
+    wait_time = random.choice(range(1,10))
+    time.sleep(wait_time)
+</code></pre><p>结果如下：</p>
+<pre><code>100
+391
+丁一元
+丁一粟
+丁上第
+丁义平
+丁子塔
+丁小栩
+丁小媚
+...
+</code></pre><p>这些数据访问都正常了之后，就可以用使用数据库存储下来了，首先建库建表，挑了一些关键信息进行存储</p>
+<p>数据表结构如下：</p>
+<pre><code class="mysql">CREATE TABLE `lawyer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `sex` tinyint(2) DEFAULT NULL,
+  `qualification_date` varchar(10) DEFAULT NULL,
+  `first_time` varchar(10) DEFAULT NULL,
+  `checkyear` int(11) DEFAULT NULL,
+  `education` varchar(10) DEFAULT NULL,
+  `office_name` varchar(255) DEFAULT NULL,
+  `certificate_no` bigint(20) DEFAULT NULL,
+  `qualification_num` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1152 DEFAULT CHARSET=utf8mb4;
+</code></pre>
+<p>完整代码如下，添加了部分统计代码：</p>
+<pre><code class="python">import requests
+import xmltodict, json
+import pymysql
+import time, math, datetime
+import random
+
+# Mysql数据库连接
+db = pymysql.connect(&quot;127.0.0.1&quot;,&quot;root&quot;,&quot;xxxxxx&quot;,&quot;lawyar&quot;,use_unicode=True,charset=&quot;utf8&quot;)
+
+# 使用 cursor() 方法创建一个游标对象 cursor
+cursor = db.cursor()
+
+s = requests.Session()
+headers = &#123;
+    &#39;Accept&#39; : &#39;application/json;charset=utf-8&#39;
+&#125;
+s.headers.update(headers)
+
+resu =  s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=0&amp;limit=1&amp;_=&#39; + str(round(time.time() * 1000)))
+
+# Json to dist
+data = json.loads(resu.text)
+total = data[&#39;total&#39;]
+limit = 100
+page = math.ceil(total / limit)
+print(&quot;数据总量：&quot; + str(total))
+print(&quot;总页数：&quot; + str(page))
+print(&quot;预计总执行时间：%ss&quot; % (str(total/9)))
+# 总时间
+start = datetime.datetime.now()
+count_wait_time = 0
+
+for curPage in range(page):
+    resu =  s.get(&#39;http://credit.gdlawyer.org.cn/front/indexFront/getLawyerOrOrgListData?time_=&amp;type=1&amp;title=&amp;city=0&amp;ognforms=0&amp;curpage=&#39; + str(curPage) + &#39;&amp;limit=&#39; + str(limit) + &#39;&amp;_=&#39; + str(round(time.time() * 1000)))
+
+    # Json to dist
+    data = json.loads(resu.text)
+
+    # 律师数据
+    rows = data[&#39;rows&#39;]
+
+    # 遍历数据
+    for value in rows:
+        sql = &quot;INSERT INTO `lawyer`(`name`, `sex`, `qualification_date`, \
+        `first_time`, `checkyear`, `education`, `office_name`, `certificate_no`, `qualification_num`) \
+        VALUES (&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;)&quot; % \
+        (value.get(&#39;LAWYER_NAME&#39;), value.get(&#39;SEX&#39;), value.get(&#39;QUALIFICATIONDATE&#39;), value.get(&#39;FIRSTTIME&#39;), \
+        value.get(&#39;CHECKYEAR&#39;), value.get(&#39;EDUCATION&#39;), value.get(&#39;OFFICENAME&#39;), value.get(&#39;CERTIFICATENO&#39;), value.get(&#39;QUALIFICATION_NUM&#39;))
+
+        sql = sql.replace(&#39;\&#39;None\&#39;&#39;, &#39;0&#39;)
+        sql.encode(&#39;utf-8&#39;)
+        # print(sql)
+        cursor.execute(sql)
+
+    # 提交数据到数据库
+    db.commit()
+    wait_time = random.choice(range(1,10))
+    count_wait_time += wait_time
+    print(&quot;当前第%d页，等待%ds&quot; % (curPage, wait_time))
+    time.sleep(wait_time)
+
+# 关闭数据库连接
+db.close()
+print(&quot;数据保存完毕，总执行时间：%ss，总等待时间：%ds&quot; % (str(datetime.datetime.now() - start), count_wait_time))
+</code></pre>
+<p>以下是我将total手动定义为560时的执行结果：</p>
+<pre><code>数据总量：560
+总页数：6
+预计总执行时间：62.22222222222222s
+当前第0页，等待4s
+当前第1页，等待6s
+当前第2页，等待5s
+当前第3页，等待2s
+当前第4页，等待8s
+当前第5页，等待8s
+数据保存完毕，总执行时间：0:01:12.207355s，总等待时间：33s
+</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>前后端分离的网站，都能使用这种方式爬取数据，如果数据在HTML中，就只能使用爬虫了，近期如果有时间，再出一篇爬虫的文章。</p>
+<h5 id="本文为原创文章，转载请注明出处（https-whark-cn）。"><a href="#本文为原创文章，转载请注明出处（https-whark-cn）。" class="headerlink" title="本文为原创文章，转载请注明出处（https://whark.cn）。"></a>本文为原创文章，转载请注明出处（<a href="https://whark.cn">https://whark.cn</a>）。</h5>]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> Python </tag>
+            
+            <tag> 爬虫 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[PHP的容器 -- 依赖注入(DI) 和 控制反转(IoC)]]></title>
+      <url>https://whark.cn/2018/03/25/DI-and-IoC/</url>
+      <content type="html"><![CDATA[<p>本文内容大部分参考自：<a href="https://juejin.im/post/590c63ad1b69e600683bf8ea">对PHP框架中的容器的理解</a></p>
+<h4 id="PHP的容器-–-依赖注入-DI-和-控制反转-IoC"><a href="#PHP的容器-–-依赖注入-DI-和-控制反转-IoC" class="headerlink" title="PHP的容器 – 依赖注入(DI) 和 控制反转(IoC)"></a>PHP的容器 – 依赖注入(DI) 和 控制反转(IoC)</h4><h5 id="DI-Dependency-Injection-依赖注入"><a href="#DI-Dependency-Injection-依赖注入" class="headerlink" title="DI  - Dependency Injection  依赖注入"></a>DI  - Dependency Injection  依赖注入</h5><h5 id="IoC-Inversion-of-Control-控制反转"><a href="#IoC-Inversion-of-Control-控制反转" class="headerlink" title="IoC - Inversion of Control  控制反转"></a>IoC - Inversion of Control  控制反转</h5><p>依赖注入和控制反转是对同一件事情的不同描述，从某个方面讲，就是它们描述的角度不同。</p>
+<ul>
+<li>依赖注入是从应用程序的角度在描述，可以把依赖注入，即：应用程序依赖容器创建并注入它所需要的外部资源；</li>
+<li>而控制反转是从容器的角度在描述，即：容器控制应用程序，由容器反向的向应用程序注入应用程序所需要的外部资源。</li>
+</ul>
+<h4 id="实现一个容器"><a href="#实现一个容器" class="headerlink" title="实现一个容器"></a>实现一个容器</h4><pre><code>//根据我们的上面的分析，容器至少需要俩个操作，分别是将类绑定到容器中以及将类从容器中取出的操作
+class Container
+&#123;
+    //容器类列表
+    public static $generator_list = [];
+
+    // 绑定类到容器中 
+    public static function bind($class_name, $generator)
+    &#123;
+        if (is_callable($generator)) &#123;
+            self::$generator_list[$class_name] = $generator;
+        &#125; else &#123;
+            throw new Exception(&#39;对象生成器不是可以调用的类型&#39;);
+        &#125;
+    &#125;
+
+    // 生成类对象
+    public static function make($class_name, $params = [])
+    &#123;
+        if (! isset(self::$generator_list[$class_name])) &#123;
+            throw new Exception($class_name.&#39;类没有被绑定注册&#39;);
+        &#125;
+        return call_user_func_array(self::$generator_list[$class_name], $params);
+    &#125;
+&#125;
+</code></pre><h4 id="使用容器"><a href="#使用容器" class="headerlink" title="使用容器"></a>使用容器</h4><pre><code>//我们先看一下bind()函数,该函数对应上面说到的绑定操作，就是将一个类放到$generator_list中，仔细看一下，你会发现，该函数并不是把一个类或者一个对象直接传递进去，而是传入了两个参数,一个是参数的名字，一个是生成器。
+//生成器说白了就是一个函数，这个函数是用来负责实例化需要绑定的类的。
+//说到这里,有同学可能有点疑惑，为什么要这样，为什么不直接传一个对象进去那?
+//原因是类的实例化的过程是需要传递参数的，传递一个生成器进去，我们在实例化这个类的时候就可以修改参数了。
+//下面就是一个绑定示例，大家可以看一下。
+    Container::bind(&quot;A&quot;,function($param)&#123;
+       return A($param);
+    &#125;)
+    self::$generator_list[&quot;A&quot;] = function($param)&#123;
+       return A($param);
+    &#125;;
+//这样，我们的绑定操作基本就说完了，下面看make()函数。之前也已经提到过了,make()函数就是将所需要的对象从这个容器中取出来。该函数也需要传递两个参数进去，一个是class_name也就是需要取出的类的名称,一个是params,也就是实例化对象的时候需要传递的参数。
+//下面的一行代码是整个函数的关键所在:
+call_user_func_array(self::$generator_list[$class_name], $params);
+self::$generator_list[$class_name]对应的是类的生成器,$params对应的是类实例化所需要的参数，
+//call_user_func_array()该函数是PHP的内置函数，通过该函数我们可以执行self::$generator_list[$class_name]对应的是类的生成器函数，这样我们也就是完成了所需类的实例化。(ps：对call_user_func_array()函数不清楚的同学可以先去看一下手册)
+</code></pre><h4 id="测试一下"><a href="#测试一下" class="headerlink" title="测试一下"></a>测试一下</h4><pre><code>//将类A的生成器函数(匿名函数/闭包)绑定到容器中
+Container::bind(&#39;A&#39;, function($name=&#39;&#39;) &#123;
+    return new A($title);
+&#125;);
+//在容器类中获取类A的对象
+$Obj = Container::make(&#39;A&#39;, [&#39;aaa&#39;]);
+//打印出得到的这个对象
+var_dump($Obj);
+//打印结果如下:
+object(A)#2 (1) &#123;
+  [&quot;name&quot;]=&gt;
+  string(4) &quot;aaa&quot;
+&#125;
+//我们在打印出self::$generator_list中的数据看一下:
+array(1) &#123;
+  [&quot;A&quot;]=&gt;
+  object(Closure)#1 (1) &#123;
+    [&quot;parameter&quot;]=&gt;
+    array(1) &#123;
+      [&quot;$name&quot;]=&gt;
+      string(10) &quot;&quot;
+    &#125;
+  &#125;
+&#125;
+</code></pre><p>怎么样,看到上面打印出来的节后是不是就清楚一些了那…上面我们分析了一下容器类的具体的执行方式，上面的代码比较的简单，也灭有涉及到类相互依赖的问题，相比大家肯定想看一下类相互依赖的时候，容器类是怎么为我们解决依赖的，我们下面就写一个例子再分析一下，其实容器的代码我们基本不需要在动了。</p>
+<pre><code>//最开始的我们就举了一个B类依赖于A类的例子，现在我们继续使用这个例子来说明一下
+//绑定A类到容器中
+Container::bind(&#39;A&#39;, function($name=&#39;&#39;) &#123;
+    return new A($title);
+&#125;);
+//绑定B类到容器中
+Container::bind(&#39;B&#39;, function($module,$params=[]) &#123;
+    return new B(Container::make($module,$params));
+&#125;);
+//上面B类的绑定方式大家可能觉得有点怪，这是因为B类依赖于A类,所以我们在B类的生成器对象中(匿名函数)中需要得到A类的实例传参给B，
+//怎么获取A类的实例那，简单，因为A类也存在于容器中，所以我们直接调用make()函数就可以获取A类的实例对象了，
+//但是在实例化A类的时候，构造函数可能需要参数，为了能够得到这些参数，我们就需要在B类的生成器对象中将这些参数传递进来。
+//下面我们调用一下B类
+$Obj= Container::make(&#39;B&#39;, [&#39;A&#39;, [&#39;aaa&#39;]]);
+//上面我们就获取到了B类的实例化的对象了，是不是很简单，有兴趣的同学可以将上面的结果打印出来看一下。
+//我们再分析一下上面的步骤，想要获取B类的实例化对象,直接通过make()进行获取,
+//因为B依赖于A，所以需要传递A到生成器函数中，但是A有需要其他的参数，所以我们还需要继续传递其他参数进去，所以参数就是一个二维数组
+//上面对参数有疑问的同学可以按照上面的流程分析一遍，就清楚了
+</code></pre><h4 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h4><p>想要实现容器的自动依赖注入，需要使用反射，通过反射，获取类构造函数所需的参数，分析出所依赖的类，然后在容器中获取其所依赖的类，其实就是一层一层的找需要什么，需要什么就在容器中找什么，找到了就作为参数传递过去，这样就实现了自动注入解决了依赖的问题。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> PHP </tag>
+            
+            <tag> 依赖注入 </tag>
+            
+            <tag> 控制反转 </tag>
+            
+            <tag> 容器 </tag>
+            
+            <tag> 注册树 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[小事记-Github上提交的PR被官方合并，我成了80个贡献者之一]]></title>
+      <url>https://whark.cn/2018/03/18/php-array-merge-or-plus/</url>
+      <content type="html"><![CDATA[<h4 id="小事记-Github上提交的PR被官方合并，我成了ThinkPHP5-1，80个贡献者之一"><a href="#小事记-Github上提交的PR被官方合并，我成了ThinkPHP5-1，80个贡献者之一" class="headerlink" title="小事记-Github上提交的PR被官方合并，我成了ThinkPHP5.1，80个贡献者之一"></a>小事记-Github上提交的PR被官方合并，我成了ThinkPHP5.1，80个贡献者之一</h4><p>使用ThinkPHP的数据验证类时，遇到了一个小bug，数字索引在数组合并时，有部分数据丢失，经过调试发现，是由于使用array_merge函数导致的，相关代码如下：</p>
+<pre><code class="php">//@@ -187,7 +187,7 @@ class Validate
+public function __construct(array $rules = [], array $message = [], array $field = [])
+&#123;
+    $this-&gt;rule    = array_merge($this-&gt;rule, $rules);  /* 修改前 */
+    $this-&gt;rule    = $rules + $this-&gt;rule;                /* 修改后 */
+    $this-&gt;message = array_merge($this-&gt;message, $message);
+    $this-&gt;field   = array_merge($this-&gt;field, $field);
+&#125;
+//@@ -214,7 +214,7 @@ public static function make(array $rules = [], array $message = [], array $field
+public function rule($name, $rule = &#39;&#39;)
+&#123;
+    if (is_array($name)) &#123;
+        $this-&gt;rule = array_merge($this-&gt;rule, $name);    /* 修改前 */
+        $this-&gt;rule = $name + $this-&gt;rule;                /* 修改后 */
+        if (is_array($rule)) &#123;
+            $this-&gt;field = array_merge($this-&gt;field, $rule);
+        &#125;
+&#125;
+</code></pre>
+<p>Google搜索了一番，其主要区别如下（引用自 <a href="https://segmentfault.com/a/1190000009114383">PHP中array_merge函数与array+array的区别</a>）：</p>
+<ol>
+<li>当下标为数值时，array_merge()不会覆盖掉原来的值，但array＋array合并数组则会把最先出现的值作为最终结果返回，而把后面的数组拥有相同键名的那些值“抛弃”掉（不是覆盖）. </li>
+<li>当下标为字符时，array＋array仍然把最先出现的值作为最终结果返回，而把后面的数组拥有相同键名的那些值“抛弃”掉，但array_merge()此时会覆盖掉前面相同键名的值. </li>
+</ol>
+<p>如果这段代码要验证的数组，Key是数值型时，使用array_merge会重建Key，导致之前的Key丢失，于是改用array + array的方式，对代码进行了如上的小修改，给ThinkPHP提交了一个Pull requests，第二天被合并，就这样成了ThinkPHP5.1的贡献者之一。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> PHP </tag>
+            
+            <tag> array_merge </tag>
+            
+            <tag> 小事记 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Windows使用常用小技巧与科学上网]]></title>
+      <url>https://whark.cn/2017/12/28/windows-skills-and-over-the-net-wall/</url>
+      <content type="html"><![CDATA[<h3 id="Windows常用小技巧"><a href="#Windows常用小技巧" class="headerlink" title="Windows常用小技巧"></a>Windows常用小技巧</h3><h4 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h4><h5 id="窗口切换快捷键："><a href="#窗口切换快捷键：" class="headerlink" title="窗口切换快捷键："></a>窗口切换快捷键：</h5><pre><code>Win+上/下：使应用窗口在最大化，正常状态以及最小化之间进行切换
+Win+左/右：使应用窗口在占据左/右半边屏幕以及正常状态之间进行切换
+Win+左/右 &gt;Win+上/下：使应用窗口占据屏幕四个角落1/4的屏幕区域
+Win+Tab：显示所有已打开的应用和桌面
+Win+Ctrl+D：新建桌面
+Win+Ctrl+F4：关闭正在使用的桌面
+Win+Ctrl+左/右：在已打开的桌面之间进行切换
+ALT+Tab
+Ctrl+ALT+TAB（滞留预览窗口）
+</code></pre><h5 id="照片应用键盘快捷键："><a href="#照片应用键盘快捷键：" class="headerlink" title="照片应用键盘快捷键："></a>照片应用键盘快捷键：</h5><pre><code>Ctrl+/：快速将编辑后的照片与原始照片进行对比
+Ctrl+R：旋转照片
+Ctrl+加号：放大照片
+Ctrl+减号：缩小照片
+</code></pre><h5 id="精确式触摸板操作手势："><a href="#精确式触摸板操作手势：" class="headerlink" title="精确式触摸板操作手势："></a>精确式触摸板操作手势：</h5><p>注意：需要使用精确式触摸板才能使用这些操作手势，比如Surface键盘中的触摸板。</p>
+<pre><code>三个手指向上轻扫：打开任务视图查看所有窗口
+三个手指向下轻扫：显示桌面
+三个手指向左侧或右侧轻扫：在打开的窗口之间进行切换。
+</code></pre><h5 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h5><pre><code>#开机启动软件管理
+Win + R，输入msconfig，点击启动，禁用无用启动项
+
+#休眠计算机
+Win + R，输入shutdown -h
+
+#定时关闭计算机（-t 后是时间参数，单位为秒）
+Win + R, 输入shutdown-s -t 3600
+
+#取消定时关机
+Win + R，输入shutdown -a
+</code></pre><h5 id="软件推荐"><a href="#软件推荐" class="headerlink" title="软件推荐"></a>软件推荐</h5><ul>
+<li><p>文件查找：<a href="https://www.voidtools.com/downloads">everything</a></p>
+</li>
+<li><p>优雅打开应用：<a href="http://www.launchy.net">launchy</a></p>
+</li>
+<li><p>跨平台IDE：</p>
+<p>​    微软出品：<a href="https://code.visualstudio.com/">VS code</a></p>
+<p>​    Github出品：<a href="https://atom.io/">ATOM</a></p>
+</li>
+</ul>
+<h5 id="网站资源推荐"><a href="#网站资源推荐" class="headerlink" title="网站资源推荐"></a>网站资源推荐</h5><ul>
+<li><p>程序员必备站点：</p>
+<p>  最大同性交友网站：<a href="https://github.com">GitHub</a></p>
+<p>  stackoverflow：<a href="https://stackoverflow.com/">stackoverflow</a></p>
+<p>  SegmentFault：<a href="https://segmentfault.com/">SegmentFault</a></p>
+</li>
+<li><p>微软镜像收录站点：<a href="https://msdn.itellyou.cn/">I Tell You</a></p>
+</li>
+<li><p>网站开发教程：<a href="http://www.w3school.com.cn/">W3school</a></p>
+</li>
+<li><p>网站前端开发框架：<a href="http://www.bootcss.com/">Bootstrap</a></p>
+</li>
+<li><p>开源中国-在线工具：<a href="http://tool.oschina.net/">在线工具</a></p>
+</li>
+<li><p>图片在线压缩(Google出品)：<a href="https://squoosh.app/">squoosh</a></p>
+</li>
+<li><p>AI人工智能图片放大：<a href="http://bigjpg.com">BigJPG</a></p>
+</li>
+<li><p>在线格式转换：<a href="https://www.online-convert.com/">online-convert</a></p>
+</li>
+</ul>
+<h3 id="Chrome插件推荐"><a href="#Chrome插件推荐" class="headerlink" title="Chrome插件推荐"></a>Chrome插件推荐</h3><ul>
+<li>屏蔽广告：<a href="https://github.com/guidesmiths/adblock-plus-crx/raw/master/bin/Adblock-Plus_v1.12.4.crx">Adblock</a><a href="https://github.com/guidesmiths/adblock-plus-crx/raw/master/bin/Adblock-Plus_v1.12.4.crx">-Plus</a></li>
+<li>记录网页内容：<a href="http://funp.in/">方片收集</a></li>
+<li>代理插件：<a href="https://github.com/FelisCatus/SwitchyOmega/releases/download/v2.5.10/SwitchyOmega_Chromium.crx">SwitchyOmega</a></li>
+<li>黑客级别插件：<a href="https://jeffjade.com/2015/10/19/2015-10-18-chrome-vimium/">Vimium</a></li>
+</ul>
+<h3 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h3><p>推荐自己购买VPS服务器搭建SSR服务，比较安全，网上分享的免费帐号和免费软件，都不安全，数据走的他们的服务器，有些还留了有后门，为了数据安全还是自建吧。</p>
+<p>自己用的是 <a href="https://www.vultr.com/?ref=7799169-4F">Vultr</a> （$5/月，点击我的链接注册，能获得50美元使用劵，也就是可以先免费试用一段时间）和 <a href="https://m.do.co/c/f6107e737cf4">Digitalocean</a>（$5/月，点击我的链接注册，能获得100美元劵，有效期60天，可以免费使用两个月）的，性价比来说是最好的，一台服务器可以几个人一起用速度都还很快，之前 <a href="https://bandwagonhost.com/aff.php?aff=36704">搬瓦工</a>（$19.99/年）挺便宜的，但现在这个套餐已经没了。</p>
+<h5 id="桌面客户端"><a href="#桌面客户端" class="headerlink" title="桌面客户端"></a>桌面客户端</h5><p><a href="https://github.com/shadowsocks/shadowsocks-windows">科学上网-Windows</a></p>
+<p><a href="https://github.com/shadowsocks/shadowsocks-iOS/releases">科学上网-Mac</a></p>
+<h5 id="移动客户端"><a href="#移动客户端" class="headerlink" title="移动客户端"></a>移动客户端</h5><p><a href="https://github.com/shadowsocksr-backup/shadowsocksr-android/releases">科学上网-Android</a></p>
+<p><a href="https://github.com/Alvin9999/new-pac/wiki/%E8%8B%B9%E6%9E%9C%E6%89%8B%E6%9C%BA%E7%BF%BB%E5%A2%99%E8%BD%AF%E4%BB%B6">科学上网-IOS</a></p>
+<h5 id="自建服务端"><a href="#自建服务端" class="headerlink" title="自建服务端"></a>自建服务端</h5><p><a href="http://ss.whark.cn/ss.html">自建SSR服务器教程</a></p>
+<p><a href="https://github.com/Alvin9999/new-pac/wiki/%E8%87%AA%E5%BB%BAv2ray%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B">自建v2ray服务器教程</a></p>
+<p><a href="https://blog.csdn.net/zdy1127/article/details/50664736">Centos7搭建pptp VPN一键安装脚本</a></p>
+<h6 id="水管变水桶的BBR："><a href="#水管变水桶的BBR：" class="headerlink" title="水管变水桶的BBR："></a>水管变水桶的BBR：</h6><p><a href="https://teddysun.com/489.html">一键安装最新内核并开启 BBR 脚本</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> Windows </tag>
+            
+            <tag> 科学上网 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Docker的使用]]></title>
+      <url>https://whark.cn/2017/11/23/use-of-docker/</url>
+      <content type="html"><![CDATA[<h3 id="Docker简介"><a href="#Docker简介" class="headerlink" title="Docker简介"></a>Docker简介</h3><p>Docker可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的<br>Linux 机器上，也可以实现虚拟化。</p>
+<h4 id="Docker组件"><a href="#Docker组件" class="headerlink" title="Docker组件"></a>Docker组件</h4><ul>
+<li><p>Docker Client：客户端         —&gt; 向docker服务器进程发起请求，如：创建、停止、销毁容器等操作</p>
+</li>
+<li><p>Docker Server：服务器进程 —&gt; 处理所有docker的请求，管理所有容器</p>
+</li>
+<li><p>Docker Registry：镜像仓库  —&gt; 镜像存放的中央仓库，可看作是存放二进制的scm</p>
+<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/docker-modules.png" alt="docker-modules"></p>
+</li>
+</ul>
+<h3 id="Docker相关教程"><a href="#Docker相关教程" class="headerlink" title="Docker相关教程"></a>Docker相关教程</h3><p><a href="http://dockone.io/article/131">Dockerfile最佳实践</a></p>
+<p><a href="https://www.awaimai.com/2120.html">Docker搭建可一键部署的多域名LNMP环境</a></p>
+<p><a href="https://blog.csdn.net/qq_36763896/article/details/53293088">7 步精简 Docker 镜像几百MB</a></p>
+<p><a href="https://goaccess.io/download">搭建nginx访问日志分析工具Goaccess</a></p>
+<p><a href="https://docs.docker.com/samples/library/php/">Docker镜像源中PHP的方法</a></p>
+<h4 id="Docker中PHP环境安装扩展的方法："><a href="#Docker中PHP环境安装扩展的方法：" class="headerlink" title="Docker中PHP环境安装扩展的方法："></a>Docker中PHP环境安装扩展的方法：</h4><pre><code class="shell">docker-php-ext-install redis
+</code></pre>
+<h5 id="PHP-CORE-EXTENSIONS"><a href="#PHP-CORE-EXTENSIONS" class="headerlink" title="PHP CORE EXTENSIONS"></a>PHP CORE EXTENSIONS</h5><pre><code class="dockerfile">FROM php:7.0-fpm
+RUN apt-get update &amp;&amp; apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng-dev \
+    &amp;&amp; docker-php-ext-install -j$(nproc) iconv mcrypt \
+    &amp;&amp; docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    &amp;&amp; docker-php-ext-install -j$(nproc) gd
+</code></pre>
+<h5 id="PECL-EXTENSIONS"><a href="#PECL-EXTENSIONS" class="headerlink" title="PECL EXTENSIONS"></a>PECL EXTENSIONS</h5><pre><code class="dockerfile">FROM php:7.1-fpm
+RUN pecl install redis-3.1.0 \
+    &amp;&amp; pecl install xdebug-2.5.0 \
+    &amp;&amp; docker-php-ext-enable redis xdebug
+
+FROM php:5.6-fpm
+RUN apt-get update &amp;&amp; apt-get install -y libmemcached-dev zlib1g-dev \
+    &amp;&amp; pecl install memcached-2.2.0 \
+    &amp;&amp; docker-php-ext-enable memcached
+</code></pre>
+<h5 id="OTHER-EXTENSIONS"><a href="#OTHER-EXTENSIONS" class="headerlink" title="OTHER EXTENSIONS"></a>OTHER EXTENSIONS</h5><pre><code class="dockerfile">FROM php:5.6-apache
+RUN curl -fsSL &#39;https://xcache.lighttpd.net/pub/Releases/3.2.0/xcache-3.2.0.tar.gz&#39; -o xcache.tar.gz \
+    &amp;&amp; mkdir -p xcache \
+    &amp;&amp; tar -xf xcache.tar.gz -C xcache --strip-components=1 \
+    &amp;&amp; rm xcache.tar.gz \
+    &amp;&amp; ( \
+        cd xcache \
+        &amp;&amp; phpize \
+        &amp;&amp; ./configure --enable-xcache \
+        &amp;&amp; make -j$(nproc) \
+        &amp;&amp; make install \
+    ) \
+    &amp;&amp; rm -r xcache \
+    &amp;&amp; docker-php-ext-enable xcache
+</code></pre>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 容器 </tag>
+            
+            <tag> skill </tag>
+            
+            <tag> Docker </tag>
+            
+            <tag> 环境搭建 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[树莓派初始化配置]]></title>
+      <url>https://whark.cn/2017/11/12/first-use-raspberry-pi/</url>
+      <content type="html"><![CDATA[<h2 id="更换国内镜像源"><a href="#更换国内镜像源" class="headerlink" title="更换国内镜像源"></a>更换国内镜像源</h2><p>很多教程没有写完整，更换源需要修改两个文件。<br>经过我的测试，发现两个文件分别使用阿里和中科大的效果最好。</p>
+<h5 id="source-list"><a href="#source-list" class="headerlink" title="source.list"></a>source.list</h5><pre><code class="shell">sudo nano /etc/apt/sources.list
+</code></pre>
+<p>将原来的配置注释掉，添加第二行即可</p>
+<pre><code class="shell">#deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi
+deb http://mirrors.aliyun.com/raspbian/raspbian/ jessie main contrib non-free rpi
+# Uncomment line below then &#39;apt-get update&#39; to enable &#39;apt-get source&#39;
+#deb-src http://archive.raspbian.org/raspbian/ jessie main contrib non-free rpi
+</code></pre>
+<h5 id="raspi-list"><a href="#raspi-list" class="headerlink" title="raspi.list"></a>raspi.list</h5><p>使用中科大镜像源</p>
+<pre><code class="shell">sudo nano /etc/apt/sources.list.d/raspi.list
+</code></pre>
+<p>将原来的配置注释掉，添加第二行即可</p>
+<pre><code class="shell">#deb http://archive.raspberrypi.org/debian/ jessie main ui
+deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ jessie main ui
+# Uncomment line below then &#39;apt-get update&#39; to enable &#39;apt-get source&#39;
+#deb-src http://archive.raspberrypi.org/debian/ jessie main ui
+</code></pre>
+<h2 id="连接-WiFi"><a href="#连接-WiFi" class="headerlink" title="连接 WiFi"></a>连接 WiFi</h2><p>编辑 wifi 文件</p>
+<pre><code class="shell">sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+</code></pre>
+<p>在该文件最后添加：</p>
+<pre><code class="conf">network=&#123;
+  ssid=&quot;wifiname&quot;
+  psk=&quot;password&quot;
+&#125;
+</code></pre>
+<p><code>引号部分分别为 WiFi 的名字和密码</code></p>
+<p>保存文件后几秒钟应该就会自动连接到该 WiFi<br>或者执行</p>
+<pre><code class="shell">sudo ifdown wlan0
+sudo ifup wlan0
+</code></pre>
+<p>查看是否连接成功</p>
+<pre><code class="shell">ifconfig wlan0
+</code></pre>
+<h2 id="设置静态-IP-地址"><a href="#设置静态-IP-地址" class="headerlink" title="设置静态 IP 地址"></a>设置静态 IP 地址</h2><pre><code class="shell">sudo nano /etc/network/interfaces
+
+allow-hotplug wlan0
+iface wlan0 inet static # 将 manual 改为 static
+    address 192.168.1.111 # 静态地址
+    netmask 255.255.255.0 # 网络掩码
+    gateway 192.168.1.1 # 网关
+    network 192.168.1.1 # 网络地址
+    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+</code></pre>
+<p>wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf 可以替换为以下设置方式</p>
+<pre><code class="conf">wpa-ssid Your_Wifi_SSID
+wpa-psk Your_Wifi_Password
+</code></pre>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> 树莓派 </tag>
+            
+            <tag> source </tag>
+            
+            <tag> ip </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[转载：配置Github Webhooks自动部署项目]]></title>
+      <url>https://whark.cn/2017/06/02/set-github-webhook/</url>
+      <content type="html"><![CDATA[<p>转载自：<a href="https://www.jianshu.com/p/e4cacd775e5b">利用Github的Webhook功能和Node.js完成项目的自动部署</a></p>
+<h3 id="首先完成Node-js服务器的代码构建，先上代码，再解释"><a href="#首先完成Node-js服务器的代码构建，先上代码，再解释" class="headerlink" title="首先完成Node.js服务器的代码构建，先上代码，再解释"></a>首先完成Node.js服务器的代码构建，先上代码，再解释</h3><pre><code>var http = require(&#39;http&#39;)
+var createHandler = require(&#39;github-webhook-handler&#39;)
+var handler = createHandler(&#123; path: &#39;/&#39;, secret: &#39;root&#39; &#125;)
+// 上面的 secret 保持和 GitHub 后台设置的一致
+
+function run_cmd(cmd, args, callback) &#123;
+  var spawn = require(&#39;child_process&#39;).spawn;
+  var child = spawn(cmd, args);
+  var resp = &quot;&quot;;
+
+  child.stdout.on(&#39;data&#39;, function(buffer) &#123; resp += buffer.toString(); &#125;);
+  child.stdout.on(&#39;end&#39;, function() &#123; callback (resp) &#125;);
+&#125;
+
+http.createServer(function (req, res) &#123;
+  handler(req, res, function (err) &#123;
+    res.statusCode = 404
+    res.end(&#39;no such location&#39;)
+  &#125;)
+&#125;).listen(7777)
+
+handler.on(&#39;error&#39;, function (err) &#123;
+  console.error(&#39;Error:&#39;, err.message)
+&#125;)
+
+handler.on(&#39;push&#39;, function (event) &#123;
+  console.log(&#39;Received a push event for %s to %s&#39;,
+    event.payload.repository.name,
+    event.payload.ref);
+    run_cmd(&#39;sh&#39;, [&#39;./deploy.sh&#39;,event.payload.repository.name], function(text)&#123; console.log(text) &#125;);
+&#125;)
+</code></pre><p>上面的代码中用到了一个github-webhook-handler的中间件，你可以用 <strong>npm install -g github-webhook-handler</strong> 来全局安装。</p>
+<p>还有代码这行:</p>
+<pre><code>var handler = createHandler(&#123; path: &#39;/&#39;, secret: &#39;root&#39; &#125;) 
+</code></pre><p>其中secret后的参数是你在github的项目中添加webhook时设置的secret值，替换成自己的就行了</p>
+<h3 id="完成deploy-sh脚本"><a href="#完成deploy-sh脚本" class="headerlink" title="完成deploy.sh脚本"></a>完成deploy.sh脚本</h3><p>deploy.sh脚本负责进入项目的目录，然后利用git命令拉取最新的代码，还是直接贴代码:</p>
+<pre><code>#!/bin/bash
+
+WEB_PATH=&#39;/root/tools/&#39;$1
+WEB_USER=&#39;root&#39;
+WEB_USERGROUP=&#39;root&#39;
+
+echo &quot;Start deployment&quot;
+cd $WEB_PATH
+echo &quot;pulling source code...&quot;
+git reset --hard origin/master
+git clean -f
+git pull
+git checkout master
+echo &quot;changing permissions...&quot;
+chown -R $WEB_USER:$WEB_USERGROUP $WEB_PATH
+echo &quot;Finished.&quot;
+</code></pre><p>deploy.sh 会接受第一个参数当做项目名字，然后进入这个项目的目录执行git操作，这个参数是在deploy.js中根据hook返回的项目名字来的，代码应该比较容易懂，都是些简单的git命令。</p>
+<pre><code>如果是全新的项目，需要在你的服务器上先clone要部署的项目
+你需要根据自己的实际项目位置，修改WEB_PATH的值
+</code></pre><h3 id="后台运行deploy-js"><a href="#后台运行deploy-js" class="headerlink" title="后台运行deploy.js"></a>后台运行deploy.js</h3><p>利用Linux提供的nohup命令，让deploy.js运行在后台</p>
+<pre><code>nohup node deploy.js &gt; deploy.log &amp;
+</code></pre><h3 id="去Github后台添加webhook"><a href="#去Github后台添加webhook" class="headerlink" title="去Github后台添加webhook"></a>去Github后台添加webhook</h3><p>进入你需要自动部署的项目的github地址，进入项目的设置页面，点击左侧的 <strong>Webhooks &amp; services</strong><br>!<img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/hithub-webhook.jpg" alt="hithub-webhook"></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> Github </tag>
+            
+            <tag> Webhooks </tag>
+            
+            <tag> 持续集成 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[为树莓派配置开机自动上传IP]]></title>
+      <url>https://whark.cn/2017/06/01/how-to-know-respberry-ip/</url>
+      <content type="html"><![CDATA[<h3 id="查询IP并上传IP"><a href="#查询IP并上传IP" class="headerlink" title="查询IP并上传IP"></a>查询IP并上传IP</h3><h4 id="ip-sh"><a href="#ip-sh" class="headerlink" title="ip.sh"></a>ip.sh</h4><pre><code>#!/bin/bash
+
+#outside_ip
+ip1=`curl -s ipecho.net/plain`
+
+#inside_ip
+ip2=`LC_ALL=C ifconfig|grep &quot;inet addr:&quot;|grep -v &quot;127.0.0.1&quot;| cut -d: -f2|awk &#39;&#123;print $1&#125;&#39;`
+ip3=`LC_ALL=C ifconfig|grep &quot;[0-9]\&#123;1,3\&#125;\.[0-9]\&#123;1,3\&#125;\.[0-9]\&#123;1,3\&#125;\.[0-9]\&#123;1,3\&#125;&quot;|grep -v &quot;127.0.0.1&quot;|cut -d: -f2|awk &#39;&#123;print $2&#125;&#39;|head -n 1`
+if [ ! -n &quot;$ip2&quot; ];
+then
+    ip2=$ip3
+fi
+
+url=&#39;ip.whark.cn&#39;
+
+#change your name
+name=&#39;test_ubuntu&#39;
+
+while getopts :ha:o:i: OPTION
+do
+case $OPTION in
+a) name=$OPTARG ;;
+o) ip1=$OPTARG ;;
+i) ip2=$OPTARG ;;
+h)
+echo -e &quot;help:\n  -a \tname&quot;
+echo -e &quot;  -o \tthe outside ip&quot;
+echo -e &quot;  -i \tthe inside ip&quot;
+echo -e &quot;  -h \thelp document&quot;
+exit ;;
+\?) ;;
+esac
+done
+
+url2=&quot;$url?outside_ip=$ip1&amp;inside_ip=$ip2&amp;name=$name&quot;
+#echo $url2
+curl $url2
+
+echo -e &quot;Client : Successful!&quot;
+</code></pre><p>编辑<strong>ip.sh</strong>并保存</p>
+<pre><code>chmod +x ip.sh
+</code></pre><p>查询IP并上传</p>
+<pre><code>./ip.sh
+</code></pre><p>然后在 <a href="http://ip.whark.cn">ip.whark.cn</a> 查看<br>也可以使用参数,”-h” 获取参数列表</p>
+<pre><code>./ip.sh --help
+# -a 指定本机的名称，如：
+./ip.sh -a test_ubuntu
+</code></pre><h3 id="配置开机自动执行"><a href="#配置开机自动执行" class="headerlink" title="配置开机自动执行"></a>配置开机自动执行</h3><h4 id="config-sh"><a href="#config-sh" class="headerlink" title="config.sh"></a>config.sh</h4><pre><code>#!/bin/bash
+path=`pwd`
+file_name=&quot;ip.sh&quot;
+file_path=&quot;$path/$file_name&quot;
+
+echo &quot;#auto upload local ip address&quot; &gt;&gt; /etc/rc.d/rc.local
+
+#change your name in here
+#echo &quot;$file_path -a your_name &gt; /dev/null&quot; &gt;&gt; /etc/rc.d/rc.local
+
+if [ ! -n &quot;$1&quot; ]
+then
+    echo &quot;$file_path &gt; /dev/null 2&gt;&amp;1&quot; &gt;&gt; /etc/rc.d/rc.local
+else
+    echo &quot;$file_path -a $1 &gt; /dev/null 2&gt;&amp;1&quot; &gt;&gt; /etc/rc.d/rc.local
+fi
+</code></pre><p>编辑<strong>config.sh</strong>并保存</p>
+<pre><code>chmod +x config.sh
+</code></pre><p>执行config.sh，添加到开机启动</p>
+<pre><code>./config.sh
+</code></pre><p>可直接添加参数name</p>
+<pre><code>./config.sh your_name
+</code></pre><p>第二次配置时，需要将 /etc/rc.d/rc.local 文件中，前一次添加的内容删除</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> 树莓派 </tag>
+            
+            <tag> IP </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Linux检测远程端口是否打开]]></title>
+      <url>https://whark.cn/2017/05/30/scan-port/</url>
+      <content type="html"><![CDATA[<p>本文介绍3种检测远程端口方式，telnet、nmap和nc。如果Linux提示找不到命令，请用apt-get或者yum安装。</p>
+<h3 id="1-telnet方式"><a href="#1-telnet方式" class="headerlink" title="1 telnet方式"></a>1 telnet方式</h3><pre><code>telnet ip port
+</code></pre><p>如果提示Connected to ip，说明该端口可以访问。<br>如果超时，说明端口未开放。</p>
+<h3 id="2-nmap方式"><a href="#2-nmap方式" class="headerlink" title="2 nmap方式"></a>2 nmap方式</h3><pre><code>nmap ip -p port
+
+# 显示全部打开的端口
+nmap ip
+</code></pre><p>根据显示close/open确定端口是否打开。</p>
+<h3 id="3-nc方式"><a href="#3-nc方式" class="headerlink" title="3 nc方式"></a>3 nc方式</h3><pre><code>nc -v ip port
+</code></pre><p>端口未打开返回状态为非0。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> Linux </tag>
+            
+            <tag> 端口扫描 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[给指定URL添加访问控制]]></title>
+      <url>https://whark.cn/2017/05/24/website-page-add-authentication/</url>
+      <content type="html"><![CDATA[<h3 id="给指定URL添加访问控制"><a href="#给指定URL添加访问控制" class="headerlink" title="给指定URL添加访问控制"></a>给指定URL添加访问控制</h3><p>应用场景为某一直播页面，需要设置访问权限，Nginx根据路由设置访问权限的方式，在微信中无法正常使用，而该应用场景，主要为微信上观看直播，所以使用PHP来实现单页面授权。</p>
+<pre><code class="php">&lt;?php
+/**
+ * 给指定URL添加访问控制
+ */
+error_reporting(0);
+session_start();
+$html = &lt;&lt;&lt;html
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;style&gt;
+        #input-text &#123;
+            width: auto;
+            padding: 0.5em 1em;
+            border: 1px solid #ccc;
+            border-radius: 0.2em;
+            height: auto;
+            font-size: 2em;
+        &#125;
+        #input-submit &#123;
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+            margin-left: 1em;
+            padding: 0.4em 1em;
+            border: 1px solid transparent;
+            border-radius: 0.2em;
+            font-size: 2em;
+        &#125;
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;div class=&quot;text-center&quot; style=&quot;padding-top: 20%;text-align: center&quot;&gt;
+    &lt;form action=&quot;live_url&quot; method=&quot;post&quot;&gt;
+    &lt;input id=&quot;input-text&quot; type=&quot;password&quot; placeholder=&quot;请输入访问密码：&quot; name=&quot;live_auth&quot;/&gt;
+    &lt;input id=&quot;input-submit&quot; type=&quot;submit&quot; value=&quot;进入&quot;&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+html;
+/**
+ * 给特定页面进行密码验证
+ */
+ /*********** Solution One *********/
+
+$url = [
+    &#39;/20180328&#39;,
+    &#39;/20180329&#39;
+];
+$auth_name = [
+    &#39;live_auth0328&#39;,
+    &#39;live_auth0329&#39;,
+];
+$auth_passwd = [
+    &#39;12345678&#39;,
+    &#39;123456&#39;,
+];
+
+$key = &#39;&#39;;
+if (!empty($_POST)) &#123;
+    // POST字段匹配
+    $postDataKey = array_keys($_POST)[0];
+    $key = array_search($postDataKey, $auth_name, true);
+&#125;
+
+$path = parse_url( $_SERVER[&#39;REQUEST_URI&#39;] )[&#39;path&#39;];
+$key = $key ?: array_search( $path, $url, true);
+
+if ($key !== &#39;&#39; &amp;&amp; $key !== FALSE) &#123;
+    if (isset($_POST[$auth_name[$key]]) &amp;&amp; $_POST[$auth_name[$key]] === $auth_passwd[$key]) &#123;
+        $_SESSION[$auth_name[$key]] = &#39;1&#39;;
+    &#125;
+    if ($path === $url[$key]) &#123;
+        if (!isset($_SESSION[$auth_name[$key]]) || $_SESSION[$auth_name[$key]] !== &#39;1&#39;) &#123;
+            $html = str_replace(&#39;live_auth&#39;, $auth_name[$key], $html);
+            $html = str_replace(&#39;live_url&#39;, $url[$key], $html);
+            echo $html;die;
+        &#125;
+    &#125;
+&#125;
+
+/*********** Solution Two *********/
+/*
+//20180328
+$url = &#39;/20180328&#39;;
+$auth_name = &#39;live_auth0328&#39;;
+$auth_passwd = &#39;12345678&#39;;
+if (isset($_POST[$auth_name]) &amp;&amp; $_POST[$auth_name] === $auth_passwd) &#123;
+    $_SESSION[$auth_name] = &#39;1&#39;;
+&#125;
+if (parse_url( $_SERVER[&#39;REQUEST_URI&#39;] )[&#39;path&#39;] === $url) &#123;
+    if (!isset($_SESSION[$auth_name]) || $_SESSION[$auth_name] !== &#39;1&#39;) &#123;
+        $html = str_replace(&#39;live_auth&#39;, $auth_name, $html);
+        $html = str_replace(&#39;live_url&#39;, $url, $html);
+        echo $html;die;
+    &#125;
+&#125;
+
+//20180329
+$url = &#39;/20180329&#39;;
+$auth_name = &#39;live_auth0329&#39;;
+$auth_passwd = &#39;123456&#39;;
+if (isset($_POST[$auth_name]) &amp;&amp; $_POST[$auth_name] === $auth_passwd) &#123;
+    $_SESSION[$auth_name] = &#39;1&#39;;
+&#125;
+if (parse_url( $_SERVER[&#39;REQUEST_URI&#39;] )[&#39;path&#39;] === $url) &#123;
+    if (!isset($_SESSION[$auth_name]) || $_SESSION[$auth_name] !== &#39;1&#39;) &#123;
+        $html = str_replace(&#39;live_auth&#39;, $auth_name, $html);
+        $html = str_replace(&#39;live_url&#39;, $url, $html);
+        echo $html;die;
+    &#125;
+&#125;
+*/
+</code></pre>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> PHP </tag>
+            
+            <tag> website </tag>
+            
+            <tag> 访问控制 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Git的配置及使用]]></title>
+      <url>https://whark.cn/2017/05/22/use-of-git/</url>
+      <content type="html"><![CDATA[<h3 id="下载Git"><a href="#下载Git" class="headerlink" title="下载Git"></a>下载Git</h3><h5 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h5><pre><code>sudo apt-get install git
+</code></pre><h5 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h5><p>Git<a href="https://git-for-windows.github.io/">官网</a>下载安装</p>
+<h3 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h3><h4 id="设置git用户名-邮箱"><a href="#设置git用户名-邮箱" class="headerlink" title="设置git用户名/邮箱"></a>设置git用户名/邮箱</h4><pre><code>git config --global user.name [username]
+git config --global user.email [email]
+</code></pre><p>如果Git源每次操作需要你输入用户名/密码验证，就需要做如下设置：</p>
+<h5 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h5><pre><code>echo &quot;[credential]&quot; &gt;&gt; .git/config
+echo &quot;    helper = store&quot; &gt;&gt; .git/config
+</code></pre><h5 id="Windows-1"><a href="#Windows-1" class="headerlink" title="Windows"></a>Windows</h5><p>打开.git/config，在最后添加</p>
+<pre><code>[credential]
+    helper = store
+</code></pre><p>这样就可以保存用户名密码，不用每次都输入了！</p>
+<h3 id="使用Git"><a href="#使用Git" class="headerlink" title="使用Git"></a>使用Git</h3><h5 id="从远程库克隆"><a href="#从远程库克隆" class="headerlink" title="从远程库克隆"></a>从远程库克隆</h5><pre><code>git clone --depth=1 http://jdjks.hfnu.edu.cn/git/AnhuiIOT.git
+</code></pre><h5 id="暂存区、工作区管理"><a href="#暂存区、工作区管理" class="headerlink" title="暂存区、工作区管理"></a>暂存区、工作区管理</h5><pre><code>git add [file]                提交本次修改至暂存区
+git commit -m &quot;message&quot;        提交暂存区文件至版本库
+git status                    查看git工作区的状态
+git log                        查看版本库提交记录: 
+</code></pre><p>假设：<br>工作区：a<br>暂存区（index）:b<br>HEAD:C</p>
+<p>git diff命令</p>
+<pre><code>git diff           比较a跟b
+git diff --cached  比较b跟c
+git diff HEAD      比较a跟c
+</code></pre><p>git reset跟 git checkout</p>
+<pre><code>git reset HEAD              c覆盖b
+git checkout -- &lt;file&gt;      b覆盖a
+git checkout HEAD &lt;file&gt;    c覆盖a,b
+</code></pre><p>git rm命令</p>
+<pre><code>git rm              删除a跟b
+git rm --cached     只删除b
+rm file             只删除a
+</code></pre><p>放弃本地修改，强制pull： </p>
+<p><code>git fetch --all</code></p>
+<p><code>git reset --hard origin/master</code></p>
+<p>git fetch只是下载远程的库的内容，不做任何的合并。</p>
+<p>git reset把HEAD指向刚刚下载的最新的版本。</p>
+<h5 id="Git连接远程仓库"><a href="#Git连接远程仓库" class="headerlink" title="Git连接远程仓库"></a>Git连接远程仓库</h5><pre><code>git remote               查看远程库的信息  
+git remote -v            显示更详细的信息  
+git remote add origin git@git.coding.net:tengj/gitLearn.git  连接远程仓库  
+git clone git@git.coding.net:tengj/gitLearn.git            复制一份远程仓库项目到本地  
+git remote rm origin     关闭连接远程仓库  
+git push origin master   推送分支  
+git pull origin master   抓取更新
+</code></pre><h5 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h5><pre><code>git branch               查看当前分支
+git branch -v           查看每一个分支的最后一次提交
+git branch -a           查看本地和远程分支的情况
+git branch --merged      查看已经与当前分支合并的分支
+git branch --no-merged     查看已经与当前分支未合并的分支
+git branch -r            查看远程分支
+git branch dev           创建分支 dev
+git checkout dev         切换到分支dev
+git checkout -b dev      创建并切换分支dev
+git merge dev            名称为dev的分支与当前分支合并
+git branch -d dev        删除分支dev
+git merge --no-ff -m &quot;merge with no-ff&quot; dev            合并分支，禁用Fast forward
+git log --graph --pretty=oneline --abbrev-commit    查看分支合并情况
+</code></pre><h5 id="参考教程"><a href="#参考教程" class="headerlink" title="参考教程"></a>参考教程</h5><p><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000">git教程–廖雪峰</a></p>
+<p><a href="https://juejin.im/user/577f597d5bbb500061e8a761">掘金–嘟嘟MD</a></p>
+<p><a href="http://www.cnblogs.com/cspku/articles/Git_cmds.html">Git常用命令</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> skill </tag>
+            
+            <tag> Git </tag>
+            
+            <tag> 版本控制 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[第一次牛客网模拟测验的一些问题]]></title>
+      <url>https://whark.cn/2017/05/21/nowcoder-first-test/</url>
+      <content type="html"><![CDATA[<p>&emsp;&emsp;首先选择意向职位时，并没有<strong>PHP</strong>，所以报名时就选了<strong>运维</strong>，考试时间为5月19日 <strong>19:00-21:00</strong>，根本没有任何准备，19号上午收到官方的邮件才想起来这件事，邮件中给出了考试时间和考试的入口地址，然而我并没有好好看，匆忙的刷了一下午题，等到晚上的时候，官网上进入考试的入口一直不能进去，怎么刷新都不行，<strong>19:05</strong>才想起来再看一下邮件，开始进入考试，做选择题时，很多常用的知识都不知道，导致做选择题做了将近 <strong>40</strong>分钟，而且正确率还没保障。做编程题时，基础不够扎实，做其中一个题目就用了 <strong>45</strong>分钟，所以余下的两个题目就只剩了 <strong>20</strong>分钟的时间，这二十分钟肯定只够做其中一个题目，然而我读了下第三题的题目，还没思考，就觉得这是最后一个题目，肯定比较难，就放弃它，做另一个题目去了，然后又花了 <strong>10</strong>分钟做，才发现时间太短做不好，这时再绝望的转去做最后一题，时间已不足 <strong>10</strong>分钟，才发现这个有很快捷的解题思路，然而时间不够用了，只少了两分钟的时间，这两分钟不应该错过的，故留踩坑记录，警示自己。</p>
+<h4 id="踩坑记录"><a href="#踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h4><ol>
+<li>没有做好充分的准备，基础知识不扎实，导致做题速度慢，正确率低</li>
+</ol>
+<ul>
+<li>对信息的关注度不够，导致不能及时进入考试</li>
+<li>决策有问题，导致最后的时间没能好好利用，再次错过了答题</li>
+</ul>
+<h4 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h4><p>推荐大家使用<a href="https://www.nowcoder.com">牛客网</a>，偶尔可以刷刷题，巩固一下基础知识，无聊时可以做一下智力题专项训练，预防青年痴呆。</p>
+<h4 id="补更结果"><a href="#补更结果" class="headerlink" title="补更结果"></a>补更结果</h4><p>今天结果出来了很意外，先看了下求职竞争力报告，分数挺低的，挺可惜的，后来和同学详聊的时候，他发现我进排行榜了，着实吓了一跳，这下觉得更可惜了。以下附上求职竞争力报告和排行榜。</p>
+<p><a href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/Job_competitiveness_report.pdf">求职竞争力报告</a></p>
+<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/Leaderboard.png" alt="2017-05-19排行榜"></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> life </tag>
+            
+            <tag> 牛客 </tag>
+            
+            <tag> 程序猿 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[我的站点]]></title>
+      <url>https://whark.cn/2017/03/25/my-website/</url>
+      <content type="html"><![CDATA[<h3 id="个人博客"><a href="#个人博客" class="headerlink" title="个人博客"></a>个人博客</h3><ul>
+<li><a href="https://wlwshow.cn">wlwshow.cn</a></li>
+<li><a href="http://dphong.top">dphong.top</a></li>
+<li><a href="http://iotshow.top">iotshow.top</a></li>
+<li><a href="http://dphong.github.io">dphong.github.io</a></li>
+</ul>
+<h3 id="智能物流系统管理平台"><a href="#智能物流系统管理平台" class="headerlink" title="智能物流系统管理平台"></a>智能物流系统管理平台</h3><ul>
+<li><a href="https://iot.wlwshow.cn">iot.wlwshow.cn</a></li>
+<li><a href="http://iot.iotshow.top">iot.iotshow.top</a></li>
+</ul>
+<h3 id="物联网作品展示平台"><a href="#物联网作品展示平台" class="headerlink" title="物联网作品展示平台"></a>物联网作品展示平台</h3><ul>
+<li><a href="https://work.wlwshow.cn">work.wlwshow.cn</a></li>
+</ul>
+<h3 id="Linux-IP上传地址"><a href="#Linux-IP上传地址" class="headerlink" title="Linux IP上传地址"></a>Linux IP上传地址</h3><ul>
+<li><a href="http://ip.wlwshow.cn">ip.wlwshow.cn</a></li>
+</ul>
+<h3 id="百度地图API使用示例"><a href="#百度地图API使用示例" class="headerlink" title="百度地图API使用示例"></a>百度地图API使用示例</h3><ul>
+<li><a href="http://map.wlwshow.cn">map.wlwshow.cn</a></li>
+</ul>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> website </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[我的2016]]></title>
+      <url>https://whark.cn/2016/12/31/my-2016/</url>
+      <content type="html"><![CDATA[<p>2016年的整体感觉就是学的东西很杂，什么都学了，什么都没深入，上半年还比较有斗志，下半年什么都没学到，就这样浑浑噩噩的过完了。</p>
+<h2 id="关于学习"><a href="#关于学习" class="headerlink" title="关于学习"></a>关于学习</h2><p>上半年虽然参加了很多的比赛，但哪个比赛都没做好。下半年则是什么都没学好，就只是弄了下云服务器，机器人小组培训、附中代课、帮老师帮忙，这一些琐碎的生活占据了我大部分的学习时间。回想这一年也就只有大二下学期期末之前做<a href="http://wlwshow.cn">物联网作品展示平台</a>这个网站的时候，真正奋斗过一段时间，现在想起来，那段时间是那样的充实。</p>
+<h2 id="关于竞赛"><a href="#关于竞赛" class="headerlink" title="关于竞赛"></a>关于竞赛</h2><h3 id="robocup-2D"><a href="#robocup-2D" class="headerlink" title="robocup 2D"></a>robocup 2D</h3><p>这个曾经奋斗了一年的项目，因为它，我结识到一群挚友，和他们共同努力，我的人生开始因此而不同，梦想始于此。</p>
+<h3 id="ACM"><a href="#ACM" class="headerlink" title="ACM"></a>ACM</h3><p>4月份的时候参加了学校集体报名的CCF计算机资格认证，因为成绩还不错，就被朱强老师叫去参加安徽省的ACM程序设计竞赛，和实验室的战友一起去参加了这次比赛，因为那段时间比较忙，并没有怎么去准备，ACM的基本框架都不怎么会写，该特别注意的地方也不知道，因为不知道 “printf” 和 “cout” 在处理数据时的速度差别，导致一个已经做出来的题目因为 “timeout” 而无法通过测试，对此特别遗憾。</p>
+<h3 id="物联网创新创业大赛"><a href="#物联网创新创业大赛" class="headerlink" title="物联网创新创业大赛"></a>物联网创新创业大赛</h3><p>当时和两个室友一起加入了这个小组，感觉冯玉婷老师付出的比我们的都多，然而我们一学期都没能坚持下来，然后整个项目就荒废掉了，暑假的比赛也没报名参加，无果而终。</p>
+<h3 id="单片机与嵌入式系统应用技能竞赛"><a href="#单片机与嵌入式系统应用技能竞赛" class="headerlink" title="单片机与嵌入式系统应用技能竞赛"></a>单片机与嵌入式系统应用技能竞赛</h3><p>今年这个竞赛新增了一个ARM版，因为我以前学过STM32，所以就和学长一起报名参加了，但也没有好好准备，所以比赛的结果并不好。</p>
+<h2 id="关于读书"><a href="#关于读书" class="headerlink" title="关于读书"></a>关于读书</h2><p>这一年就只读了这几本书，还有些买来了就没看过的，没有完成当初定下的读书目标，今后一定要多读点书（人丑就要多读书）。</p>
+<blockquote>
+<p>《拆掉思维里的墙》<br>《从0到1》<br>《创新者的窘境》</p>
+</blockquote>
+<h2 id="关于生活"><a href="#关于生活" class="headerlink" title="关于生活"></a>关于生活</h2><p>有一群非常要好的朋友，一起奋斗，是件多么快乐的事啊。<br>还记得当时程慧生日的时候，叫了实验室的人一起吃饭，我跟强强坐在一起，当时他们是喝的那么尽兴，我还不理解的问了强强，怎么喝这么猛，强强回了一句，下次再一起聚就不知道是什么时候的事了，这一次自然要喝到尽兴为止。他们都去工作之后，我体会到了那种感情，却不能退到那一天，陪他们酩酊大醉，下次再聚，我不会再错过了。<br>陈兴，最要好的朋友之一，非常敬佩他的学习精神与生活态度，能够勇敢的去做自己想做的事情，并且能坚定自己的想法。<br>当然还有强强、赵坤鹏、程慧，你们这群学长对我的鼓励与帮助，永远铭记于心。<br>送给自己的一段话：</p>
+<blockquote>
+<p>高潮时享受成就，低潮时享受人生，有心思时干有意义的活，没心情时做有意思的事。</p>
+</blockquote>
+<h2 id="关于理想"><a href="#关于理想" class="headerlink" title="关于理想"></a>关于理想</h2><p>大一时候的理想是要创业，结果一两年下来，离这个理想越来越远，已经变成梦想飞走了，对人生思考的还远远不够，反思太少了，现在的理想就是好好学习，多读书，多反思。</p>
+<blockquote>
+<p>平庸，就是失去追求卓越信念的那个瞬间。</p>
+</blockquote>
+<h2 id="关于爱情"><a href="#关于爱情" class="headerlink" title="关于爱情"></a>关于爱情</h2><p>我们之间，没有开始，就也不会有结束，送你这段话。</p>
+<blockquote>
+<p>愿你，此后做的每一个选择都是为了自己；<br>愿你，每天那么忙，做的都是自己喜欢的；<br>愿你，将来的婚姻，真的是因为爱情；<br>愿你，少一些何必当初，多一些暗自庆幸；<br>愿你，以后的所有泪水都是喜极而泣。</p>
+</blockquote>
+<p align="right">落笔于2016.12.31 21:30。</p>]]></content>
+      
+        
+        <tags>
+            
+            <tag> life </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[运用 批处理文件+Excel 实现批量改名]]></title>
+      <url>https://whark.cn/2016/09/10/First-blog/</url>
+      <content type="html"><![CDATA[<h2 id="1-进入CMD命令行模式"><a href="#1-进入CMD命令行模式" class="headerlink" title="1.进入CMD命令行模式"></a>1.进入CMD命令行模式</h2><p>按 win+r ，在弹出的运行框中输入cmd，回车。</p>
+<p><img src="http://odar1igu6.bkt.clouddn.com/1.png" alt="Alt text"></p>
+<h2 id="2-将现在的文件名导入Excel"><a href="#2-将现在的文件名导入Excel" class="headerlink" title="2.将现在的文件名导入Excel"></a>2.将现在的文件名导入Excel</h2><p>在命令行中使用cd命令进入相应的文件夹，再在命令行中输入 dir /w &gt; rename.xls </p>
+<p><img src="http://odar1igu6.bkt.clouddn.com/2.png" alt="Alt text"><br>文件夹中就会生成一个 rename.xls 的Excel文件。</p>
+<h2 id="3-生成重命名命令"><a href="#3-生成重命名命令" class="headerlink" title="3.生成重命名命令"></a>3.生成重命名命令</h2><p>使用公式 =SUBSTITUTE(A1,”old_string”,”new_string”),回车<br><img src="http://odar1igu6.bkt.clouddn.com/3.png" alt="Alt text"></p>
+<p>再输入 =CONCATENATE(“ren “,A1,” “,B1)</p>
+<p><img src="http://odar1igu6.bkt.clouddn.com/4.png" alt="Alt text"></p>
+<h2 id="4-执行批处理命令"><a href="#4-执行批处理命令" class="headerlink" title="4.执行批处理命令"></a>4.执行批处理命令</h2><p>将上面批量生成的命令复制下来，在之前的cmd命令行中粘贴，或者在目标文件夹下新建 rename.bat ,右键 编辑，粘贴保存，双击即可运行。<br><img src="http://odar1igu6.bkt.clouddn.com/5.png" alt="Alt text"></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 批处理 </tag>
+            
+            <tag> Excel </tag>
+            
+            <tag> skill </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
+</search>
