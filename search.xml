@@ -244,7 +244,7 @@ tmpfs           1021032     275  1020757    1% /run/user/0
 <p>基础建设：先在服务器上搭建好 Hexo 环境，可以参照这篇博客 <a href="https://www.jianshu.com/p/75efaba08a34">Hexo环境搭建2018年5月版</a>,完成之后的效果就是，访问自定义域名或者 <em>xxx.github.io</em> 能访问到自己的博客。</p>
 <p>本文背景：但这样有一个限制，必须在搭建 hexo 的电脑上才能写作，并更新到博客，不太方便，考虑到 GitHub 支持Markdown 语法，Hexo 的写作也是使用 Markdown，所以就思考是否可以在 Github 上直接写作，更新博客。</p>
 <p>解决方案：使用 Github 的 Webhooks 工具，监听代码仓库 push 状态，如果代码有新的 commit，就触发一次 Webhooks，POST 一份数据到自定义的 URL 上 (Reference: <a href="https://whark.cn/2017/06/02/set-github-webhook/">转载：配置Github Webhooks自动部署项目</a> )，具体思路如下：</p>
-<p><img src="http://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/Simplified%20Writing.png" alt="Simplified%20Writing.png"></p>
+<p><img src="http://oss.whark.cn/blog/posts/img/Simplified%20Writing.png" alt="Simplified%20Writing.png"></p>
 <p>最终的效果就是博客就展示在 GitHub Pages(<a href="dphong.github.io">dphong.github.io</a>) 和 自己的服务器(<a href="https://whark.cn">https://whark.cn</a>)上了。</p>
 ]]></content>
       
@@ -411,11 +411,11 @@ Sender发送消息给Queue；Receiver从Queue拿到消息来处理。
       <url>https://whark.cn/2018/03/27/use-python-crawl-lawyer-data/</url>
       <content type="html"><![CDATA[<p>本文以律师行业信用服务平台为例，介绍如何对页面数据进行提取，保存。</p>
 <h3 id="开始：页面数据分析"><a href="#开始：页面数据分析" class="headerlink" title="开始：页面数据分析"></a>开始：页面数据分析</h3><p>打开 <a href="http://credit.gdlawyer.org.cn/front/indexFront/listDetail?type=1">广东省律师行业信用信息服务平台</a> ，F12打开控制台，点击Network，刷新界面，发现了向API请求的接口，返回的资源是 <strong>Json</strong> 格式的，而且资源中的数据就是页面上的，就能确认页面中的律师信息就是通过这个接口读取的，本站点是采用前后端分离写的，如果没有类似的请求，数据是直接渲染在HTML中，说明HTML在后端已经处理好了，只能按标签，分离数据了。</p>
-<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/lawyer_find_api_address.jpg" alt="lawyer_find_api_address"></p>
+<p><img src="https://oss.whark.cn/blog/posts/img/lawyer_find_api_address.jpg" alt="lawyer_find_api_address"></p>
 <h3 id="尝试：API接口调用"><a href="#尝试：API接口调用" class="headerlink" title="尝试：API接口调用"></a>尝试：API接口调用</h3><p>看看API能不能正常访问，如下图：</p>
-<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/lawyer_api_address_try.jpg" alt="lawyer_api_address_try"></p>
+<p><img src="https://oss.whark.cn/blog/posts/img/lawyer_api_address_try.jpg" alt="lawyer_api_address_try"></p>
 <p>观察参数，发现参数就是筛选项、分页大小、偏移量、和13位的时间戳。</p>
-<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/lawyer_api_address_analysis.png" alt="lawyer_api_address_analysis"></p>
+<p><img src="https://oss.whark.cn/blog/posts/img/lawyer_api_address_analysis.png" alt="lawyer_api_address_analysis"></p>
 <p>把参数含义弄明白后，使用Python来请求API数据</p>
 <pre><code class="python">import requests
 
@@ -953,7 +953,7 @@ Win + R，输入shutdown -a
 <li><p>Docker Server：服务器进程 —&gt; 处理所有docker的请求，管理所有容器</p>
 </li>
 <li><p>Docker Registry：镜像仓库  —&gt; 镜像存放的中央仓库，可看作是存放二进制的scm</p>
-<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/docker-modules.png" alt="docker-modules"></p>
+<p><img src="https://oss.whark.cn/blog/posts/img/docker-modules.png" alt="docker-modules"></p>
 </li>
 </ul>
 <h3 id="Docker相关教程"><a href="#Docker相关教程" class="headerlink" title="Docker相关教程"></a>Docker相关教程</h3><p><a href="http://dockone.io/article/131">Dockerfile最佳实践</a></p>
@@ -1145,7 +1145,7 @@ echo &quot;Finished.&quot;
 你需要根据自己的实际项目位置，修改WEB_PATH的值
 </code></pre><h3 id="后台运行deploy-js"><a href="#后台运行deploy-js" class="headerlink" title="后台运行deploy.js"></a>后台运行deploy.js</h3><p>利用Linux提供的nohup命令，让deploy.js运行在后台</p>
 <pre><code>nohup node deploy.js &gt; deploy.log &amp;
-</code></pre><h3 id="去Github后台添加webhook"><a href="#去Github后台添加webhook" class="headerlink" title="去Github后台添加webhook"></a>去Github后台添加webhook</h3><p>进入你需要自动部署的项目的github地址，进入项目的设置页面，点击左侧的 <strong>Webhooks &amp; services</strong><br>!<img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/hithub-webhook.jpg" alt="hithub-webhook"></p>
+</code></pre><h3 id="去Github后台添加webhook"><a href="#去Github后台添加webhook" class="headerlink" title="去Github后台添加webhook"></a>去Github后台添加webhook</h3><p>进入你需要自动部署的项目的github地址，进入项目的设置页面，点击左侧的 <strong>Webhooks &amp; services</strong><br>!<img src="https://oss.whark.cn/blog/posts/img/hithub-webhook.jpg" alt="hithub-webhook"></p>
 ]]></content>
       
         
@@ -1500,8 +1500,8 @@ git log --graph --pretty=oneline --abbrev-commit    查看分支合并情况
 </ul>
 <h4 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h4><p>推荐大家使用<a href="https://www.nowcoder.com">牛客网</a>，偶尔可以刷刷题，巩固一下基础知识，无聊时可以做一下智力题专项训练，预防青年痴呆。</p>
 <h4 id="补更结果"><a href="#补更结果" class="headerlink" title="补更结果"></a>补更结果</h4><p>今天结果出来了很意外，先看了下求职竞争力报告，分数挺低的，挺可惜的，后来和同学详聊的时候，他发现我进排行榜了，着实吓了一跳，这下觉得更可惜了。以下附上求职竞争力报告和排行榜。</p>
-<p><a href="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/Job_competitiveness_report.pdf">求职竞争力报告</a></p>
-<p><img src="https://whark.oss-cn-hangzhou.aliyuncs.com/blog/posts/img/Leaderboard.png" alt="2017-05-19排行榜"></p>
+<p><a href="https://oss.whark.cn/blog/posts/img/Job_competitiveness_report.pdf">求职竞争力报告</a></p>
+<p><img src="https://oss.whark.cn/blog/posts/img/Leaderboard.png" alt="2017-05-19排行榜"></p>
 ]]></content>
       
         
